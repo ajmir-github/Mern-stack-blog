@@ -4,6 +4,7 @@ const express = require("express")
 const cors = require("cors");
 const database = require("./utils/database");
 const fileUpload = require("express-fileupload");
+const path = require("path");
 
 // Routers
 const userRouter = require("./Router/userRouter");
@@ -30,7 +31,7 @@ app.use(cors({
 }));
 app.use(fileUpload({
   useTempFiles: true,
-  tempFileDir: '/tmp/'
+  tempFileDir: path.join(__dirname, "tmp")
 }));
 
 // Routers
@@ -38,7 +39,6 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/image", imageRouter);
-
 
 
 // Server Activator
