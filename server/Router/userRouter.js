@@ -18,7 +18,7 @@ router.get("/", // Get Users
 )
 
 // Routes
-router.get("/", // Get A Single user
+router.get("/:_id", // Get A Single user
   getSingleUser
 )
 

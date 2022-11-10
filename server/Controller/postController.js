@@ -52,7 +52,9 @@ exports.createPost = async (req, res) => {
     res
       .status(201)
       .send(_id);
-
+    // append the post in the user's post
+    req.payload.posts.push(_id.toString());
+    await req.payload.save();
   } catch ({ message, status }) {
     res
       .status(status || 500)

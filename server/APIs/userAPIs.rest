@@ -1,6 +1,9 @@
 ### GET USERS
 GET http://localhost:4000/user
 
+### GET A Single USER
+GET http://localhost:4000/user/636d09f5baeef495029a4a16
+
 ### CREATE A USER
 POST http://localhost:4000/user
 Content-Type: application/json

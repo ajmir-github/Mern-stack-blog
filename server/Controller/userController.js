@@ -12,7 +12,9 @@ exports.getUser = async (req, res) => {
       .find()
       .sort({ date: -1 })
       .limit(+req.query.limit || 10)
-      .skip(+req.query.skip || 0);
+      .skip(+req.query.skip || 0)
+      .populate("posts");
+
     // send users
     res.json(users);
   } catch ({ message, status }) {
@@ -28,7 +30,10 @@ exports.getUser = async (req, res) => {
 exports.getSingleUser = async (req, res) => {
   try {
     const { _id } = req.params;
-    const user = await UserModel.findById(_id)
+    const user = await UserModel
+      .findById(_id)
+      .populate("posts");
+
     // send the user
     res.json(user);
   } catch ({ message, status }) {

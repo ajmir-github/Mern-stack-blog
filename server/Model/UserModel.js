@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  aritcles: [
+  posts: [
     {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "post",
