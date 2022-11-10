@@ -23,6 +23,21 @@ exports.getUser = async (req, res) => {
 };
 
 
+
+// USER /user/:_id
+exports.getSingleUser = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const user = await UserModel.findById(_id)
+    // send the user
+    res.json(user);
+  } catch ({ message, status }) {
+    res
+      .status(status || 500)
+      .json(message || "+++ Server error!")
+  }
+}
+
 // POST /user
 exports.createUser = async (req, res) => {
   try {

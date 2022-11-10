@@ -21,6 +21,7 @@ exports.getPost = async (req, res) => {
   }
 };
 
+// POST /post/:_id
 exports.getSinglePost = async (req, res) => {
   try {
     const { _id } = req.params;

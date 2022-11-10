@@ -5,6 +5,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getUser,
+  getSingleUser,
   createUser,
   deleteUser,
   updateUser
@@ -14,6 +15,11 @@ const {
 // Routes
 router.get("/", // Get Users
   getUser
+)
+
+// Routes
+router.get("/", // Get A Single user
+  getSingleUser
 )
 
 router.post("/", // Create a User
