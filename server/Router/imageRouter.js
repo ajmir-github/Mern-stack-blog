@@ -27,7 +27,7 @@ const ImageSizes = {
   xxxl: 1280,
 };
 
-const ImageSrcFolder = "images";
+const ImageSrcFolder = "image";
 const ImageInputName = "file";
 const PublicDirectory = path.join(__dirname, "../", "public");
 
@@ -41,23 +41,17 @@ function readImage(filePath) {
   })
 }
 
-function setCacheMed({ days }) {
-  const period = 60 * 60 * 24 * days;
-  return (req, res, next) => {
-    res.set('Cache-control', 'public, max-age=' + period);
-    next();
-  }
-}
-
 
 // ----------------------------------------------
 // ----------------------------------------------
 // ----------------------------------------------
 // Routes
 
-router.post("/upload", async (req, res) => {
+router.post("/", async (req, res) => {
   // Upload a file and save it in uploads folder
   // input name = file
+  console.log(req.body)
+  console.log(req.files)
   try {
     if (!req.files) throw {
       message: "Please select a file to be uploaded!"
@@ -72,7 +66,8 @@ router.post("/upload", async (req, res) => {
       "main" + fileExt // unique Id + file extension
     )
     const fullFilePath = path.join(PublicDirectory, filePath);
-    const url = path.join(ImageSrcFolder, uniqueId) + fileExt;
+    const imageFileName = uniqueId + fileExt;
+    const url = "/" + ImageSrcFolder + "/" + imageFileName;
 
     // Make promise out of mv function of express-fileuploader
     // create the src folder
@@ -82,7 +77,9 @@ router.post("/upload", async (req, res) => {
         status: 401,
         message: "failed to upload!"
       };
-      res.json({ message: "Uploaded!", url })
+      res
+        .status(201)
+        .json(url)
     }
     )
 
@@ -92,10 +89,10 @@ router.post("/upload", async (req, res) => {
 });
 
 
-router.post("/delete", async (req, res) => {
+router.delete("/:fileName", async (req, res) => {
   // Delete a file from uploads folder
   try {
-    const { fileName } = req.body;
+    const { fileName } = req.params;
     if (!fileName) throw {
       status: 400,
       message: "Please define the file name!"
@@ -120,7 +117,7 @@ router.post("/delete", async (req, res) => {
 
 
 
-router.get("/:fileName", setCacheMed({ days: 1 }), async (req, res) => {
+router.get("/:fileName", async (req, res) => {
   try {
     const { size } = req.query;
     const { fileName } = req.params;
@@ -159,7 +156,6 @@ router.get("/:fileName", setCacheMed({ days: 1 }), async (req, res) => {
     // Send the file
     res.sendFile(resizedFilePath);
   } catch ({ status, message }) {
-    console.log({ message })
     res
       .status(status || 500)
       .send(message)

@@ -3,6 +3,8 @@
 const express = require("express")
 const cors = require("cors");
 const database = require("./utils/database");
+const fileUpload = require("express-fileupload");
+
 // Routers
 const userRouter = require("./Router/userRouter");
 const authRouter = require("./Router/authRouter");
@@ -20,12 +22,16 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 database(databaseURL);
 
 // Server setup
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cors({
   methods: "*",
   origin: CORS_ORIGIN
-}))
+}));
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
 
 // Routers
 app.use("/auth", authRouter);
