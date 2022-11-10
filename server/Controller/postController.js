@@ -21,6 +21,19 @@ exports.getPost = async (req, res) => {
   }
 };
 
+exports.getSinglePost = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const post = await PostModel.findById(_id)
+    // send the post
+    res.json(post);
+  } catch ({ message, status }) {
+    res
+      .status(status || 500)
+      .json(message || "+++ Server error!")
+  }
+}
+
 
 // POST /post
 exports.createPost = async (req, res) => {

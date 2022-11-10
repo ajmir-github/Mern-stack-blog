@@ -6,6 +6,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getPost,
+  getSinglePost,
   createPost,
   deletePost,
   updatePost
@@ -15,6 +16,10 @@ const {
 // Routes
 router.get("/", // Get Posts
   getPost
+)
+
+router.get("/:_id", // Get a single post
+  getSinglePost
 )
 
 router.post("/", // Create a Post
