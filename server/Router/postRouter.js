@@ -11,7 +11,7 @@ const {
   deletePost,
   updatePost
 } = require("../Controller/postController");
-
+const { authHeader } = require("../Controller/authController");
 
 // Routes
 router.get("/", // Get Posts
@@ -23,6 +23,7 @@ router.get("/:_id", // Get a single post
 )
 
 router.post("/", // Create a Post
+  authHeader,
   createPost
 )
 

@@ -4,16 +4,18 @@ GET http://localhost:4000/post
   &skip=0
 
 ### GET A SINGLE POST
-GET http://localhost:4000/post/636d4944d1089745707c75e6
+GET http://localhost:4000/post/636d6a04355c16769626be4c
+
 
 ### CREATE A POST
 POST http://localhost:4000/post
 Content-Type: application/json
+Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
+
 
 {
   "title":"How to speak!",
-  "body":"post validation failed: createdBy: Path `createdBy` is required., body: Path `body` is required., title: Path `title` is required.",
-  "createdBy":"636cc48136c9a045dee671ab"
+  "body":"post validation failed: createdBy: Path `createdBy` is required., body: Path `body` is required., title: Path `title` is required."
 }
 ### DELETE A POST
 DELETE  http://localhost:4000/post/636bca16952778e76a72606f

@@ -53,18 +53,15 @@ exports.authHeader = async (req, res, next) => {
   try {
     // decode the token
     const { authorization } = req.headers;
-    const token = authorization.replace("token ", "");
-    if (typeof token === "undefined") throw {
-      message: "Provide a token!",
+    if (typeof authorization === "undefined") throw {
+      message: "Provide a header authorization!",
       status: 400
     };
+    const token = authorization.replace("token ", "");
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);
-    req.payload = {
-      ...req.payload,
-      authUser: user
-    };
+    req.payload = user;
     next();
   } catch ({ message, status }) {
     res

@@ -11,7 +11,8 @@ exports.getPost = async (req, res) => {
       .find()
       .sort({ date: -1 })
       .limit(+req.query.limit || 10)
-      .skip(+req.query.skip || 0);
+      .skip(+req.query.skip || 0)
+      .populate("createdBy");
     // send the posts
     res.json(posts);
   } catch ({ message, status }) {
@@ -25,7 +26,9 @@ exports.getPost = async (req, res) => {
 exports.getSinglePost = async (req, res) => {
   try {
     const { _id } = req.params;
-    const post = await PostModel.findById(_id)
+    const post = await PostModel
+      .findById(_id)
+      .populate("createdBy");
     // send the post
     res.json(post);
   } catch ({ message, status }) {
@@ -41,7 +44,8 @@ exports.createPost = async (req, res) => {
   try {
     // Create it
     const post = new PostModel({
-      ...req.body
+      ...req.body,
+      createdBy: req.payload._id.toString()
     });
     const { _id } = await post.save();
     // Send back the post id
