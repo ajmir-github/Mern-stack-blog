@@ -1,3 +1,4 @@
+"use strict";
 // Imports
 const express = require("express")
 const cors = require("cors");
@@ -6,6 +7,7 @@ const database = require("./utils/database");
 const userRouter = require("./Router/userRouter");
 const authRouter = require("./Router/authRouter");
 const postRouter = require("./Router/postRouter");
+const imageRouter = require("./Router/imageRouter");
 
 
 // Global Vars
@@ -29,8 +31,9 @@ app.use(cors({
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
+app.use("/image", imageRouter);
 
 
 
 // Server Activator
-app.listen(PORT, console.log(`--- server is listening on port: ${PORT}`))
+app.listen(PORT, console.log(`--- Server is listening on port: ${PORT}`))
