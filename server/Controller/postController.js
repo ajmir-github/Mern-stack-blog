@@ -1,5 +1,4 @@
 const { PostModel } = require("../Model/PostModel");
-const { hash } = require("../utils/encrypt")
 
 
 // --------------------------------
@@ -21,16 +20,6 @@ exports.getPost = async (req, res) => {
 // POST /post
 exports.createPost = async (req, res) => {
   try {
-    // Check this postname is created or not
-    const { postname } = req.body;
-    if (await PostModel.findOne({ postname }) !== null) throw {
-      message: "A post is already created by this postname!",
-      status: 400
-    };
-    // hash password
-    if (typeof req.body?.password !== "undefined") {
-      req.body.password = await hash(req.body?.password)
-    }
     // Create it
     const post = new PostModel({
       ...req.body
