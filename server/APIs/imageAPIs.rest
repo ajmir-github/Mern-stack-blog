@@ -11,9 +11,9 @@ Content-Type: image/jpg
 
 
 ### Get the image itself
-GET http://localhost:4000/image/fff9dfbf-8e92-488e-86f4-06e032c06a6b.jpg
+DELETE http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
 ### Get the image itself
-GET http://localhost:4000/image/beach.jpg
+GET http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
 ### Get the coverted version
 GET http://localhost:4000/image/fff9dfbf-8e92-488e-86f4-06e032c06a6b.jpg
   ?size=xs

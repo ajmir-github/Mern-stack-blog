@@ -97,9 +97,17 @@ router.delete("/:fileName", async (req, res) => {
       status: 400,
       message: "Please define the file name!"
     };
+
     // relative path
     const folderName = fileName.replace(path.extname(fileName), "");
     const folderPath = path.join(PublicDirectory, ImageSrcFolder, folderName);
+
+    // Make sure that the parent fodler exists
+    if (!fs.existsSync(folderPath)) throw {
+      message: "No file was found the given name!",
+      status: 404
+    }
+
     // Delete the files inside of the folder
     const images = await fs.promises.readdir(folderPath);
     for (const image of images)
@@ -110,7 +118,7 @@ router.delete("/:fileName", async (req, res) => {
     res.json("File has successfully deleted!");
 
   } catch ({ status, message }) {
-    res.status(status || 500).json({ message });
+    res.status(status || 500).send(message);
   }
 });
 
