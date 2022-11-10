@@ -9,7 +9,7 @@ const {
   createUser,
   deleteUser,
   updateUser
-} = require("../Controller/userController");
+} = require("../controller/userController");
 
 
 // Routes

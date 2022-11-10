@@ -1,4 +1,4 @@
-const { UserModel } = require("../Model/UserModel");
+const { UserModel } = require("../model/UserModel");
 const secureToken = require("../utils/secureToken");
 const encrypt = require("../utils/encrypt");
 

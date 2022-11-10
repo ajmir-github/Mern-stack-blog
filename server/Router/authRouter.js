@@ -4,7 +4,7 @@ const {
   signIn,
   authToken,
   authHeader
-} = require("../Controller/authController");
+} = require("../controller/authController");
 
 
 

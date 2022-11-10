@@ -10,8 +10,8 @@ const {
   createPost,
   deletePost,
   updatePost
-} = require("../Controller/postController");
-const { authHeader } = require("../Controller/authController");
+} = require("../controller/postController");
+const { authHeader } = require("../controller/authController");
 
 // Routes
 router.get("/", // Get Posts

@@ -1,4 +1,4 @@
-const { PostModel } = require("../Model/PostModel");
+const { PostModel } = require("../model/PostModel");
 
 
 // --------------------------------

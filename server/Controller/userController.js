@@ -1,4 +1,4 @@
-const { UserModel } = require("../Model/UserModel");
+const { UserModel } = require("../model/UserModel");
 const { hash } = require("../utils/encrypt")
 
 

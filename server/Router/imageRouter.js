@@ -5,7 +5,7 @@ const {
   getImage,
   uploadImage,
   deleteImage
-} = require("../Controller/imageController");
+} = require("../controller/imageController");
 
 
 router.get("/:fileName", // get image when needed convert them

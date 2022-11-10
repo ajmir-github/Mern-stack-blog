@@ -7,10 +7,10 @@ const fileUpload = require("express-fileupload");
 const path = require("path");
 
 // Routers
-const userRouter = require("./Router/userRouter");
-const authRouter = require("./Router/authRouter");
-const postRouter = require("./Router/postRouter");
-const imageRouter = require("./Router/imageRouter");
+const userRouter = require("./router/userRouter");
+const authRouter = require("./router/authRouter");
+const postRouter = require("./router/postRouter");
+const imageRouter = require("./router/imageRouter");
 
 
 // Global Vars
