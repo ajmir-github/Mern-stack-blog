@@ -5,6 +5,7 @@ const database = require("./utils/database");
 // Routers
 const userRouter = require("./Router/userRouter");
 const authRouter = require("./Router/authRouter");
+const postRouter = require("./Router/postRouter");
 
 
 // Global Vars
@@ -24,8 +25,9 @@ app.use(cors({
 }))
 
 // Routers
-app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
 
 
 

@@ -1,0 +1,24 @@
+### GET POSTs
+GET http://localhost:4000/post
+  ?limit=10
+  &skip=0
+
+### CREATE A POST
+POST http://localhost:4000/post
+Content-Type: application/json
+
+{
+  "title":"How to speak!",
+  "body":"post validation failed: createdBy: Path `createdBy` is required., body: Path `body` is required., title: Path `title` is required.",
+  "createdBy":"636cc48136c9a045dee671ab"
+}
+### DELETE A POST
+DELETE  http://localhost:4000/post/636bca16952778e76a72606f
+
+### CREATE A POST
+PATCH  http://localhost:4000/post/636bca16952778e76a72606f
+Content-Type: application/json
+
+{
+  "email":"a@gmail.com"
+}

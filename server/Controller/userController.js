@@ -8,7 +8,12 @@ const { hash } = require("../utils/encrypt")
 // GET /user
 exports.getUser = async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel
+      .find()
+      .sort({ date: -1 })
+      .limit(+req.query.limit || 10)
+      .skip(+req.query.skip || 0);
+    // send users
     res.json(users);
   } catch ({ message, status }) {
     res

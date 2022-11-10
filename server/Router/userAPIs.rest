@@ -8,7 +8,7 @@ Content-Type: application/json
 {
   "username":"ajmir",
   "password":"xxx",
-  "email":"sf@gmail.com",
+  "crf":"sf@gmail.com",
   "fullName":"Ajmir Raziqi"
 }
 ### DELETE A USER

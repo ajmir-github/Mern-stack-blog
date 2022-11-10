@@ -7,7 +7,12 @@ const { PostModel } = require("../Model/PostModel");
 // GET /post
 exports.getPost = async (req, res) => {
   try {
-    const posts = await PostModel.find();
+    const posts = await PostModel
+      .find()
+      .sort({ date: -1 })
+      .limit(+req.query.limit || 10)
+      .skip(+req.query.skip || 0);
+    // send the posts
     res.json(posts);
   } catch ({ message, status }) {
     res
