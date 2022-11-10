@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
       ref: "post",
     }
   ]
-});
+}, { versionKey: false });
 
 const UserModel = mongoose.model("user", UserSchema);
 module.exports = { UserModel }

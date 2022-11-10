@@ -40,6 +40,11 @@ exports.authToken = async (req, res) => {
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);
+    // if user not exisits
+    if (user === null) throw {
+      message: "This user does not exists anymore!",
+      status: 400
+    };
     res.json(user);
   } catch ({ message, status }) {
     res
@@ -61,6 +66,12 @@ exports.authHeader = async (req, res, next) => {
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);
+    // if user not exisits
+    if (user === null) throw {
+      message: "This user does not exists anymore!",
+      status: 400
+    };
+    // Response
     req.payload = user;
     next();
   } catch ({ message, status }) {

@@ -4,7 +4,7 @@ GET http://localhost:4000/post
   &skip=0
 
 ### GET A SINGLE POST
-GET http://localhost:4000/post/636d6bae3070bb1b66b9a56c
+GET http://localhost:4000/post/636d7668fce19977983ba92c
 
 
 ### CREATE A POST

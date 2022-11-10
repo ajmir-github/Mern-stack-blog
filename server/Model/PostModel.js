@@ -22,7 +22,7 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, { versionKey: false });
 
 const PostModel = mongoose.model("post", PostSchema)
 

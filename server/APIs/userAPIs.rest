@@ -15,12 +15,16 @@ Content-Type: application/json
   "fullName":"Ajmir Raziqi"
 }
 ### DELETE A USER
-DELETE  http://localhost:4000/user/636bca16952778e76a72606f
+DELETE  http://localhost:4000/user
+Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
 
-### CREATE A USER
-PATCH  http://localhost:4000/user/636bca16952778e76a72606f
+
+### UPDATE A USER
+PATCH  http://localhost:4000/user
 Content-Type: application/json
+Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
+
 
 {
-  "email":"a@gmail.com"
+  "username":"bobo@gmail.com"
 }

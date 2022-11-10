@@ -8,8 +8,11 @@ const {
   getSingleUser,
   createUser,
   deleteUser,
-  updateUser
+  updateUser,
 } = require("../controller/userController");
+const {
+  authHeader
+} = require("../controller/authController");
 
 
 // Routes
@@ -26,11 +29,13 @@ router.post("/", // Create a User
   createUser
 )
 
-router.delete("/:_id", // Delete a user
+router.delete("/", // Delete a user
+  authHeader,
   deleteUser
 )
 
-router.patch("/:_id", // Update a user
+router.patch("/", // Update a user
+  authHeader,
   updateUser
 )
 

@@ -7,11 +7,15 @@ const { hash } = require("../utils/encrypt")
 // GLOBAL VARS
 const UserLimit = process.env.USER_LIMIT || 10;
 
+
+// --------------------------------
+// Standalon Meddlewares
+
 // GET /user
 exports.getUser = async (req, res) => {
   try {
     const users = await UserModel
-      .find()
+      .find(undefined, "-password")
       .sort({ date: -1 })
       .limit(+req.query.limit || UserLimit)
       .skip(+req.query.skip || 0)
@@ -33,7 +37,7 @@ exports.getSingleUser = async (req, res) => {
   try {
     const { _id } = req.params;
     const user = await UserModel
-      .findById(_id)
+      .findById(_id, "-password")
       .populate("posts");
 
     // send the user
@@ -81,14 +85,10 @@ exports.createUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     // Get the ID param
-    const { _id } = req.params;
-    const deletedUser = await UserModel.findByIdAndDelete(_id);
-    if (deletedUser === null) throw {
-      message: "There is no user with the given id!",
-      status: 400
-    };
+    await req.payload.remove();
+    // response
     res
-      .send("A user with the given id was deleted!");
+      .send("Your user is deleted!");
   } catch ({ message, status }) {
     res
       .status(status || 500)
@@ -101,16 +101,14 @@ exports.deleteUser = async (req, res) => {
 // UPDATE /user
 exports.updateUser = async (req, res) => {
   try {
-    // update the user
-    const { _id } = req.params;
-    await UserModel.findOneAndUpdate(
-      _id,
-      { ...req.body }
-    );
-    // give a response back
+    // Update the user
+    await req.payload
+      .set({ ...req.body })
+      .save();
+    // response
     res
       .status(201)
-      .send("A user with the given id is updated!");
+      .send("Your user is updated!");
   } catch ({ message, status }) {
     res
       .status(status || 500)

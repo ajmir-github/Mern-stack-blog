@@ -13,7 +13,7 @@ exports.getPost = async (req, res) => {
       .sort({ date: -1 })
       .limit(+req.query.limit || PostLimit)
       .skip(+req.query.skip || 0)
-      .populate("createdBy");
+      .populate("createdBy", "-password");
     // send the posts
     res.json(posts);
   } catch ({ message, status }) {
