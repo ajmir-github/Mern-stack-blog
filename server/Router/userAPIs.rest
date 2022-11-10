@@ -1,0 +1,23 @@
+### GET USERS
+GET http://localhost:4000/user
+
+### CREATE A USER
+POST http://localhost:4000/user
+Content-Type: application/json
+
+{
+  "username":"ajmir",
+  "password":"xxx",
+  "email":"sf@gmail.com",
+  "fullName":"Ajmir Raziqi"
+}
+### DELETE A USER
+DELETE  http://localhost:4000/user/636bca16952778e76a72606f
+
+### CREATE A USER
+PATCH  http://localhost:4000/user/636bca16952778e76a72606f
+Content-Type: application/json
+
+{
+  "email":"a@gmail.com"
+}
