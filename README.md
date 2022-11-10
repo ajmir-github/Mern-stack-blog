@@ -35,3 +35,13 @@ function App() {
   return <Component />;
 }
 ```
+
+# Report
+
+## Nov 10, 2022
+
+- File uploader APIs added
+- User and Post APIs improved
+- Folder structure was made up to conventions
+- Project was published in to the github
+- Newer version of node only uses protocl ip address instead of localhost:3000

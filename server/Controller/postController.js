@@ -2,7 +2,8 @@ const { PostModel } = require("../model/PostModel");
 
 
 // --------------------------------
-// Standalone Meddlewares
+// GLOBAL VARS
+const PostLimit = process.env.POST_LIMIT || 10;
 
 // GET /post
 exports.getPost = async (req, res) => {
@@ -10,7 +11,7 @@ exports.getPost = async (req, res) => {
     const posts = await PostModel
       .find()
       .sort({ date: -1 })
-      .limit(+req.query.limit || 10)
+      .limit(+req.query.limit || PostLimit)
       .skip(+req.query.skip || 0)
       .populate("createdBy");
     // send the posts

@@ -2,8 +2,10 @@ const { UserModel } = require("../model/UserModel");
 const { hash } = require("../utils/encrypt")
 
 
+
 // --------------------------------
-// Standalone Meddlewares
+// GLOBAL VARS
+const UserLimit = process.env.USER_LIMIT || 10;
 
 // GET /user
 exports.getUser = async (req, res) => {
@@ -11,7 +13,7 @@ exports.getUser = async (req, res) => {
     const users = await UserModel
       .find()
       .sort({ date: -1 })
-      .limit(+req.query.limit || 10)
+      .limit(+req.query.limit || UserLimit)
       .skip(+req.query.skip || 0)
       .populate("posts");
 
