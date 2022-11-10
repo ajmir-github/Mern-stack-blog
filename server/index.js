@@ -12,6 +12,7 @@ const postRouter = require("./Router/postRouter");
 const app = express();
 const PORT = process.env.PORT || 4000;
 const databaseURL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/newtestA";
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 
 // Database Connection
 database(databaseURL);
@@ -21,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors({
   methods: "*",
-  origin: "*"
+  origin: CORS_ORIGIN
 }))
 
 // Routers
