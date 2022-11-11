@@ -1,0 +1,19 @@
+### Upload image
+POST http://localhost:4000/image
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="1.jpg"
+Content-Type: image/jpg
+
+< ./assets/main.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### Get the image itself
+DELETE http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
+### Get the image itself
+GET http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
+### Get the coverted version
+GET http://localhost:4000/image/2cf6ca83-1409-4313-8bc3-da8d7112aa7d.jpg
+  ?size=xs

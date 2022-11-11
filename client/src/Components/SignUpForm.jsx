@@ -30,6 +30,6 @@ export default function SignUpForm({ submit }) {
     <input type="email" placeholder="Email" ref={emailRef} required />
     <input type="text" placeholder="Username" ref={usernameRef} required />
     <input type="password" placeholder="Password" ref={passwordRef} required />
-    <input type="submit" value="Register" />
+    <input type="submit" value="Sign up" />
   </form>
 }
