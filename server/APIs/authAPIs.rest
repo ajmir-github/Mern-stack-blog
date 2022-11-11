@@ -23,3 +23,6 @@ Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx
 {
   "name":"Ajmir Raziqi"
 }
+
+### Test
+GET http://localhost:4000/test

@@ -6,6 +6,8 @@ const { hash } = require("../utils/encrypt")
 // --------------------------------
 // GLOBAL VARS
 const UserLimit = process.env.USER_LIMIT || 10;
+const PostLimit = process.env.POST_LIMIT || 10;
+
 
 
 // --------------------------------
@@ -38,10 +40,22 @@ exports.getSingleUser = async (req, res) => {
     const { _id } = req.params;
     const user = await UserModel
       .findById(_id, "-password")
-      .populate("posts");
+      .populate({
+        path: "posts",
+        options: {
+          sort: { date: -1 },
+          limit: +req.query.limit || PostLimit,
+          skip: +req.query.skip || 0
+        }
+      });
 
     // send the user
     res.json(user);
+
+    // Increment views
+    user.views += 2;
+    await user.save();
+
   } catch ({ message, status }) {
     res
       .status(status || 500)
@@ -85,7 +99,8 @@ exports.createUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     // Get the ID param
-    await req.payload.remove();
+    const user = req.payload.get("authUser");
+    await user.remove();
     // response
     res
       .send("Your user is deleted!");
@@ -102,7 +117,8 @@ exports.deleteUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     // Update the user
-    await req.payload
+    const user = req.payload.get("authUser");
+    await user
       .set({ ...req.body })
       .save();
     // response

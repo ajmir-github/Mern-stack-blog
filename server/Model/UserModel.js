@@ -22,7 +22,11 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.SchemaTypes.ObjectId,
       ref: "post",
     }
-  ]
+  ],
+  views: {
+    type: Number,
+    default: 0
+  }
 }, { versionKey: false });
 
 const UserModel = mongoose.model("user", UserSchema);

@@ -1,4 +1,5 @@
 const { PostModel } = require("../model/PostModel");
+const { UserModel } = require("../model/UserModel");
 
 
 // --------------------------------
@@ -29,24 +30,38 @@ exports.getSinglePost = async (req, res) => {
     const { _id } = req.params;
     const post = await PostModel
       .findById(_id)
-      .populate("createdBy");
+      .populate("createdBy", "-password");
+
     // send the post
     res.json(post);
+
+    // increment views to post
+    post.views++;
+    await post.save();
+    // increment views to user posted this
+    const userId = post.createdBy._id.toString();
+    const user = await UserModel.findById(userId)
+    user.views++;
+    await user.save();
+
   } catch ({ message, status }) {
     res
       .status(status || 500)
       .json(message || "+++ Server error!")
   }
+
+
 }
 
 
 // POST /post
 exports.createPost = async (req, res) => {
   try {
+    const user = req.payload.get("authUser");
     // Create it
     const post = new PostModel({
       ...req.body,
-      createdBy: req.payload._id.toString()
+      createdBy: user._id.toString()
     });
     const { _id } = await post.save();
     // Send back the post id
@@ -54,8 +69,8 @@ exports.createPost = async (req, res) => {
       .status(201)
       .send(_id);
     // append the post in the user's post
-    req.payload.posts.push(_id.toString());
-    await req.payload.save();
+    user.posts.push(_id.toString());
+    await user.save();
   } catch ({ message, status }) {
     res
       .status(status || 500)
@@ -68,13 +83,17 @@ exports.createPost = async (req, res) => {
 // DELETE /post
 exports.deletePost = async (req, res) => {
   try {
-    // Get the ID param
+    // Delete the post
+    const user = req.payload.get("authUser");
     const { _id } = req.params;
-    const deletedpost = await PostModel.findByIdAndDelete(_id);
-    if (deletedpost === null) throw {
-      message: "There is no post with the given id!",
-      status: 400
+    const post = await PostModel.findById(_id);
+    // Is this user allowed
+    if (user.toString() !== post.createdBy.toString()) throw {
+      message: "You are not allowed!",
+      status: 403
     };
+    // delete
+    await post.remove();
     res
       .send("A post with the given id was deleted!");
   } catch ({ message, status }) {
@@ -90,11 +109,19 @@ exports.deletePost = async (req, res) => {
 exports.updatePost = async (req, res) => {
   try {
     // update the post
-    const { _id } = req.params;
-    await PostModel.findOneAndUpdate(
-      _id,
-      { ...req.body }
-    );
+    const user = req.payload.get("authUser");
+    const post = await PostModel.findById(req.params._id);
+    // Is this user allowed
+    const userId = user._id.toString();
+    const createdById = post.createdBy.toString();
+    if (userId !== createdById) throw {
+      message: "You are not allowed!",
+      status: 403
+    };
+    // update
+    await post
+      .set({ ...req.body })
+      .save();
     // give a response back
     res
       .status(201)

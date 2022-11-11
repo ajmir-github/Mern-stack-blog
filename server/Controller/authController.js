@@ -3,7 +3,11 @@ const secureToken = require("../utils/secureToken");
 const encrypt = require("../utils/encrypt");
 
 
+// Standalone Meddleware
 exports.signIn = async (req, res) => {
+  // Sign in user using its username and hashed password
+  // Put the user's id in a secure token and send back
+  // Alos sent the user itself back too
   try {
     const { username, password } = req.body;
     const user = await UserModel.findOne({ username });
@@ -18,8 +22,10 @@ exports.signIn = async (req, res) => {
       status: 400
     }
     // set up a tokenized cookie
-    const token = await secureToken.sign(user._id.toString());
+    const userId = user._id.toString();
+    const token = await secureToken.sign(userId);
     res.json({ token, user })
+
   } catch ({ message, status }) {
     res
       .status(status || 500)
@@ -29,7 +35,11 @@ exports.signIn = async (req, res) => {
 }
 
 
-exports.authToken = async (req, res) => {
+// Standalone Meddleware
+exports.verifyToken = async (req, res) => {
+  // Get the sent token
+  // Verify and get the targeted user
+  // Send the user back to the client
   try {
     // decode the token
     const { token } = req.body;
@@ -40,7 +50,7 @@ exports.authToken = async (req, res) => {
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);
-    // if user not exisits
+    // if user does not exists
     if (user === null) throw {
       message: "This user does not exists anymore!",
       status: 400
@@ -54,7 +64,11 @@ exports.authToken = async (req, res) => {
 }
 
 
+// Standalone Meddleware
 exports.authHeader = async (req, res, next) => {
+  // Get the token from headers.authorization
+  // Verify and get the targeted user
+  // save it as authUser
   try {
     // decode the token
     const { authorization } = req.headers;
@@ -72,7 +86,7 @@ exports.authHeader = async (req, res, next) => {
       status: 400
     };
     // Response
-    req.payload = user;
+    req.payload.save({ authUser: user })
     next();
   } catch ({ message, status }) {
     res

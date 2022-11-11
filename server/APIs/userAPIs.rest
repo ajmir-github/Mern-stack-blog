@@ -1,8 +1,10 @@
 ### GET USERS
 GET http://localhost:4000/user
+  ?limit=2
 
 ### GET A Single USER
-GET http://localhost:4000/user/636d09f5baeef495029a4a16
+GET http://localhost:4000/user/636e1e2b1e59a87a35948d7a
+  ?limit=1
 
 ### CREATE A USER
 POST http://localhost:4000/user
@@ -11,7 +13,7 @@ Content-Type: application/json
 {
   "username":"ajmir",
   "password":"xxx",
-  "crf":"sf@gmail.com",
+  "email":"sf@gmail.com",
   "fullName":"Ajmir Raziqi"
 }
 ### DELETE A USER
@@ -22,9 +24,9 @@ Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx
 ### UPDATE A USER
 PATCH  http://localhost:4000/user
 Content-Type: application/json
-Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
+Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
 
 
 {
-  "username":"bobo@gmail.com"
+  "username":"ajmir.n"
 }

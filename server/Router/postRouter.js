@@ -28,10 +28,12 @@ router.post("/", // Create a Post
 )
 
 router.delete("/:_id", // Delete a Post
+  authHeader,
   deletePost
 )
 
 router.patch("/:_id", // Update a Post
+  authHeader,
   updatePost
 )
 

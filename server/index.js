@@ -5,6 +5,8 @@ const cors = require("cors");
 const database = require("./utils/database");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const payload = require("./utils/payload");
+
 
 // Routers
 const userRouter = require("./router/userRouter");
@@ -34,11 +36,15 @@ app.use(fileUpload({
   tempFileDir: path.join(__dirname, "tmp")
 }));
 
+// Payload func
+app.use(payload);
+
 // Routers
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/image", imageRouter);
+
 
 
 // Server Activator
