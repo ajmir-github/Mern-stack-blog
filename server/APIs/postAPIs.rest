@@ -10,7 +10,7 @@ GET http://localhost:4000/post/636e207b72db0cbb7f588de5
 ### CREATE A POST
 POST http://localhost:4000/post
 Content-Type: application/json
-Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
 
 
 {
@@ -23,7 +23,7 @@ DELETE  http://localhost:4000/post/636e1ea81e59a87a35948d87
 ### Upldate A POST
 PATCH  http://localhost:4000/post/636e207b72db0cbb7f588de5
 Content-Type: application/json
-Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
 
 
 {

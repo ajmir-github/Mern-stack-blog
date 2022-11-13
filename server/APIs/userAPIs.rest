@@ -18,13 +18,13 @@ Content-Type: application/json
 }
 ### DELETE A USER
 DELETE  http://localhost:4000/user
-Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
+Authorization: token eyJhbGciOiJIaaUzI1NiJ9.NjM2ZDA5ZjViYWVlZjQ5NTAyOWE0YTE2.5fusx_l5kQlH88oa5DUnJ0f-zc0mXa6xdmt3ZRsRTbo
 
 
 ### UPDATE A USER
 PATCH  http://localhost:4000/user
 Content-Type: application/json
-Authorization: token eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
 
 
 {

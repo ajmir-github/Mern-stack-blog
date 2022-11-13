@@ -7,6 +7,7 @@ import Article from "./Article";
 import Navbar from "./Components/Navbar";
 import SignUp from "./Routes/signUp";
 
+import { authToken } from "./Services";
 
 export default function App() {
   return <BrowserRouter>

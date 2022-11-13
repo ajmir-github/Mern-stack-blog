@@ -1,7 +1,11 @@
 const { UserModel } = require("../model/UserModel");
 const secureToken = require("../utils/secureToken");
 const encrypt = require("../utils/encrypt");
-
+// Globel vars
+const authCookieName = process.env.AUTH_COOKIE_NAME || "auth";
+function getTheToken(req) {
+  return req.cookies[authCookieName] || req.headers["authorization"]
+}
 
 // Standalone Meddleware
 exports.signIn = async (req, res) => {
@@ -33,6 +37,7 @@ exports.signIn = async (req, res) => {
   }
 
 }
+
 
 
 // Standalone Meddleware
@@ -70,13 +75,13 @@ exports.authHeader = async (req, res, next) => {
   // Verify and get the targeted user
   // save it as authUser
   try {
-    // decode the token
-    const { authorization } = req.headers;
-    if (typeof authorization === "undefined") throw {
-      message: "Provide a header authorization!",
+    // verify the token
+
+    const token = getTheToken(req);
+    if (typeof token === "undefined") throw {
+      message: "Provide a token!",
       status: 400
     };
-    const token = authorization.replace("token ", "");
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);

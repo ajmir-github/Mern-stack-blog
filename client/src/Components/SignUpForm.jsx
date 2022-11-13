@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function SignUpForm({ submit }) {
+export default function SignUpForm({ submit, state }) {
   // Ref containers
   const fullNameRef = useRef(null);
   const titleRef = useRef(null);
@@ -25,6 +25,11 @@ export default function SignUpForm({ submit }) {
   };
   // main element
   return <form onSubmit={validateForm}>
+    {state.error && (
+      <div>
+        <i style={{ color: "red" }}>{state.message}</i>
+      </div>
+    )}
     <input type="text" placeholder="Full Name" ref={fullNameRef} required />
     <input type="text" placeholder="Title" ref={titleRef} required />
     <input type="email" placeholder="Email" ref={emailRef} required />
