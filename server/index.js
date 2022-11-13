@@ -23,6 +23,7 @@ const PORT = process.env.PORT || 4000;
 const databaseURL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/newtestA";
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 
+
 // Database Connection
 database(databaseURL);
 // Server setup
