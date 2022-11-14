@@ -22,21 +22,31 @@ const store = configureStore({
 
 // inital state
 (async () => {
-  // if there is not cookie
-  if (!hasCookie())
-    return store.dispatch({
+  const stopLoad = () =>
+    store.dispatch({
       type: viewAction.stopLoading,
     });
+  // if there is not cookie
+  if (!hasCookie()) return stopLoad();
   // auth the cookie
   const token = getCookie();
-  const res = await authToken(token);
-  console.log(res);
+  const res = await authToken(token); // if error ???
+  // sign in user
+  store.dispatch({
+    type: authAction.signIn,
+    payload: {
+      token,
+      user: res.data,
+    },
+  });
+  // stop loading the website
+  stopLoad();
 })();
 
-// Debugging Log
-store.subscribe(() => {
-  console.log(store.getState());
-});
+// // Debugging Log
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });
 
 // StoreProvider
 export function StoreProvider({ children }) {

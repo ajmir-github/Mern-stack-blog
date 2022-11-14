@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { viewAction } from "../state";
+import { viewAction, authAction } from "../state";
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const view = useSelector((s) => s.view);
+  const auth = useSelector((s) => s.auth);
   return (
     <>
       {view.loading && <h1 style={{ color: "red" }}>Loading</h1>}
@@ -15,6 +16,11 @@ export default function Navbar() {
       ) : (
         <button onClick={() => dispatch({ type: viewAction.turnLightMode })}>
           Light
+        </button>
+      )}
+      {auth.signed && (
+        <button onClick={() => dispatch({ type: authAction.signOut })}>
+          Sign out
         </button>
       )}
       <ul>

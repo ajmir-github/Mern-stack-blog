@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
 import { signUp } from "../services";
 
 export default function SignUp() {
+  const userSiged = useSelector((s) => s.auth.signed);
+  const navigate = useNavigate();
+  useEffect(() => {
+    // protext the route
+    if (userSiged) navigate("/profile");
+  }, [userSiged]);
+
   const [state, setState] = useState({
     error: false,
     message: "",

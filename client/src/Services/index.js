@@ -27,7 +27,7 @@ export function signIn(user) {
 
 // POST AUTHETICATE TOKEN
 export function authToken(token) {
-  return server.post("/auth/auth_token", { token });
+  return server.post("/auth/verify_token", { token });
 }
 
 // ----------------- USER APIS
@@ -57,14 +57,14 @@ export function updateUser(newProps) {
   return server.patch("/user/", newProps);
 }
 
-setTimeout(async () => {
-  // console.log(await server.post("/test"))
-  console.log(
-    await server.post("/test", {
-      fullName: "Ajmir Raziqi",
-    })
-  );
-}, 1000);
+// setTimeout(async () => {
+//   // console.log(await server.post("/test"))
+//   console.log(
+//     await server.post("/test", {
+//       fullName: "Ajmir Raziqi",
+//     })
+//   );
+// }, 1000);
 
 // ----------------- POST APIS
 

@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 // pages
 import Home from "./pages/home";
 import Articles from "./pages/articles";
-import Article from "./pages/Article";
+import Article from "./pages/article";
 import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";

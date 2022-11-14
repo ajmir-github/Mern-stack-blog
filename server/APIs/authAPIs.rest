@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### Auth token
-POST http://localhost:4000/auth/auth_token
+POST http://localhost:4000/auth/verify_token
 Content-Type: application/json
 
 {
