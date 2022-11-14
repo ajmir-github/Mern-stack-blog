@@ -45,3 +45,8 @@ function App() {
 - Folder structure was made up to conventions
 - Project was published in to the github
 - Newer version of node only uses protocl ip address instead of localhost:3000
+
+
+## Git config
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
