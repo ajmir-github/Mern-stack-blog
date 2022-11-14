@@ -19,13 +19,17 @@ const imageRouter = require("./router/imageRouter");
 // Global Vars
 dotenv.config(".env")
 const app = express();
-const PORT = process.env.PORT || 4000;
-const databaseURL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/newtestA";
-const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
+const {
+  PORT,
+  DB_URL,
+  DB_PASSWORD,
+  CORS_ORIGIN
+} = process.env;
 
 
 // Database Connection
-database(databaseURL);
+database(DB_URL.replace("<password>", DB_PASSWORD));
+
 // Server setup
 app.use(cors({
   methods: "GET, POST, PATCH, DELETE", // better that '*'
@@ -57,7 +61,8 @@ app.all("/test", (req, res) => {
     body: req.body,
     query: req.query,
     headers: req.headers,
-    cookie: req.cookies
+    cookie: req.cookies,
+    files:req.files
   })
 })
 
