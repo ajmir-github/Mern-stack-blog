@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
+import useAuthEffect from "../hooks/userAuthEffect";
 import { signUp } from "../services";
 
 export default function SignUp() {
-  const userSiged = useSelector((s) => s.auth.signed);
   const navigate = useNavigate();
-  useEffect(() => {
-    // protext the route
-    if (userSiged) navigate("/profile");
-  }, [userSiged]);
+  useAuthEffect((signed) => {
+    if (signed) navigate("/profile");
+  });
 
   const [state, setState] = useState({
     error: false,

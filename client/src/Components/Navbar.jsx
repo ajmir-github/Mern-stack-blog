@@ -4,8 +4,11 @@ import { viewAction, authAction } from "../state";
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const view = useSelector((s) => s.view);
-  const auth = useSelector((s) => s.auth);
+  const [view, auth] = useSelector((s) => [s.view, s.auth]);
+  const signOut = () => {
+    dispatch({ type: viewAction.startLoading });
+    dispatch({ type: authAction.signOut });
+  };
   return (
     <>
       {view.loading && <h1 style={{ color: "red" }}>Loading</h1>}
@@ -18,11 +21,7 @@ export default function Navbar() {
           Light
         </button>
       )}
-      {auth.signed && (
-        <button onClick={() => dispatch({ type: authAction.signOut })}>
-          Sign out
-        </button>
-      )}
+      {auth.signed && <button onClick={signOut}>Sign out</button>}
       <ul>
         <li>
           <Link to={"/"}>HOME</Link>
@@ -41,6 +40,9 @@ export default function Navbar() {
         </li>
         <li>
           <Link to={"/profile"}>PROFILE</Link>
+        </li>
+        <li>
+          <Link to={"/notfoundurl"}>notfoundurl</Link>
         </li>
       </ul>
     </>

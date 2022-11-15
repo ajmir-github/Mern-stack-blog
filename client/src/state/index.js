@@ -3,7 +3,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { authReducer, authAction } from "./authReducer";
 import { viewReducer, viewAction } from "./viewReducer";
-import { hasCookie, getCookie } from "../utils/cookie";
+import { hasCookie, getCookie, removeCookie } from "../utils/cookie";
 import { authToken } from "../services";
 
 // Export Actions
@@ -21,7 +21,7 @@ const store = configureStore({
 });
 
 // inital state
-(async () => {
+function initState() {
   const stopLoad = () =>
     store.dispatch({
       type: viewAction.stopLoading,
@@ -30,18 +30,28 @@ const store = configureStore({
   if (!hasCookie()) return stopLoad();
   // auth the cookie
   const token = getCookie();
-  const res = await authToken(token); // if error ???
-  // sign in user
-  store.dispatch({
-    type: authAction.signIn,
-    payload: {
-      token,
-      user: res.data,
-    },
-  });
+  authToken(token)
+    .then((res) => {
+      // sign in user
+      store.dispatch({
+        type: authAction.signIn,
+        payload: {
+          token,
+          user: res.data,
+        },
+      });
+    })
+    .catch(({ response }) => {
+      // delete the cookie if the user does not exists
+      if (response.status === 404) removeCookie();
+    });
   // stop loading the website
   stopLoad();
-})();
+}
+
+setTimeout(() => {
+  initState();
+}, 1000);
 
 // // Debugging Log
 // store.subscribe(() => {

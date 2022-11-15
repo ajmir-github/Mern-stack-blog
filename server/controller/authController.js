@@ -4,7 +4,7 @@ const encrypt = require("../utils/encrypt");
 // Globel vars
 const authCookieName = process.env.AUTH_COOKIE_NAME || "auth";
 function getTheToken(req) {
-  return req.cookies[authCookieName] || req.headers["authorization"]
+  return req.cookies[authCookieName] || req.headers["authorization"];
 }
 
 // Standalone Meddleware
@@ -16,29 +16,27 @@ exports.signIn = async (req, res) => {
     const { username, password } = req.body;
     const user = await UserModel.findOne({ username });
     // if username not matched
-    if (user === null) throw {
-      message: "Username not found!",
-      status: 400
-    }
+    if (user === null)
+      throw {
+        message: "Username not found!",
+        status: 400,
+      };
     // if password not matched
-    if (!await encrypt.match(password, user.password)) throw {
-      message: "Password not matched!",
-      status: 400
-    }
+    if (!(await encrypt.match(password, user.password)))
+      throw {
+        message: "Password not matched!",
+        status: 400,
+      };
     // set up a tokenized cookie
     const userId = user._id.toString();
     const token = await secureToken.sign(userId);
-    res.json({ token, user })
-
+    // hide the password
+    delete user.password;
+    res.json({ token, user });
   } catch ({ message, status }) {
-    res
-      .status(status || 500)
-      .send(message)
+    res.status(status || 500).send(message);
   }
-
-}
-
-
+};
 
 // Standalone Meddleware
 exports.verifyToken = async (req, res) => {
@@ -48,26 +46,26 @@ exports.verifyToken = async (req, res) => {
   try {
     // decode the token
     const { token } = req.body;
-    if (typeof token === "undefined") throw {
-      message: "Provide a token!",
-      status: 400
-    };
+    if (typeof token === "undefined")
+      throw {
+        message: "Provide a token!",
+        status: 400,
+      };
     const userId = await secureToken.verfy(token);
     // get the correspondent user
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId, "-password");
     // if user does not exists
-    if (user === null) throw {
-      message: "This user does not exists anymore!",
-      status: 400
-    };
+    if (user === null)
+      throw {
+        message: "This user does not exists anymore!",
+        status: 404,
+      };
+
     res.json(user);
   } catch ({ message, status }) {
-    res
-      .status(status || 500)
-      .send(message)
+    res.status(status || 500).send(message);
   }
-}
-
+};
 
 // Standalone Meddleware
 exports.authHeader = async (req, res, next) => {
@@ -78,24 +76,24 @@ exports.authHeader = async (req, res, next) => {
     // verify the token
 
     const token = getTheToken(req);
-    if (typeof token === "undefined") throw {
-      message: "Provide a token!",
-      status: 400
-    };
+    if (typeof token === "undefined")
+      throw {
+        message: "Provide a token!",
+        status: 400,
+      };
     const userId = await secureToken.verfy(token);
     // get the correspondent user
     const user = await UserModel.findById(userId);
     // if user not exisits
-    if (user === null) throw {
-      message: "This user does not exists anymore!",
-      status: 400
-    };
+    if (user === null)
+      throw {
+        message: "This user does not exists anymore!",
+        status: 404,
+      };
     // Response
-    req.payload.save({ authUser: user })
+    req.payload.save({ authUser: user });
     next();
   } catch ({ message, status }) {
-    res
-      .status(status || 500)
-      .send(message)
+    res.status(status || 500).send(message);
   }
-}
+};

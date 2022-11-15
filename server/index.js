@@ -1,11 +1,11 @@
 "use strict";
 // Imports
-const express = require("express")
+const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const database = require("./utils/database");
 const fileUpload = require("express-fileupload");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const payload = require("./utils/payload");
 
@@ -15,36 +15,39 @@ const authRouter = require("./router/authRouter");
 const postRouter = require("./router/postRouter");
 const imageRouter = require("./router/imageRouter");
 
-
 // Global Vars
-dotenv.config(".env")
+dotenv.config(".env");
 const app = express();
-const {
-  PORT,
-  DB_URL,
-  DB_PASSWORD,
-  CORS_ORIGIN
-} = process.env;
-
+const { PORT, DB_URL, DB_PASSWORD, FRONTEND_URL } = process.env;
 
 // Database Connection
 database(DB_URL.replace("<password>", DB_PASSWORD));
 
 // Server setup
-app.use(cors({
-  methods: "GET, POST, PATCH, DELETE", // better that '*'
-  origin: CORS_ORIGIN,
-  credentials: true, // it needs the origin to be specified
-  // preflightContinue: true,
-}));
+app.use(
+  cors({
+    methods: "GET, POST, PATCH, DELETE", // better that '*'
+    origin: FRONTEND_URL,
+    credentials: true, // it needs the origin to be specified
+    // preflightContinue: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(fileUpload({
-  useTempFiles: true,
-  tempFileDir: path.join(__dirname, "tmp")
-}));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, "tmp"),
+  })
+);
+
+// // Error Handling
+// if (process.env.NODE_ENV === "development") {
+// }
+// if (process.env.NODE_ENV === "production") {
+// }
 
 // Payload func
 app.use(payload);
@@ -62,9 +65,9 @@ app.all("/test", (req, res) => {
     query: req.query,
     headers: req.headers,
     cookie: req.cookies,
-    files:req.files
-  })
-})
+    files: req.files,
+  });
+});
 
 // Server Activator
-app.listen(PORT, console.log(`--- Server is listening on port: ${PORT}`))
+app.listen(PORT, console.log(`--- Server is listening on port: ${PORT}`));
