@@ -26,12 +26,7 @@ function ViewElement({ children }) {
   // it stops rendering the whole app and shows loading page
   const { theme, loading } = useSelector((s) => s.view);
   return (
-    <main
-      style={{
-        backgroundColor:
-          theme === "light" ? "rgb(225, 225, 225)" : "rgb(200, 200, 200)",
-      }}
-    >
+    <main className={theme === "light" ? "light-mode" : "dark-mode"}>
       {loading ? <LoadingPage /> : children}
     </main>
   );

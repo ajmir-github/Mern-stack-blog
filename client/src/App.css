@@ -1,11 +1,27 @@
+:root{
+    --light:rgb(202, 202, 202);
+    --dark:rgb(0, 9, 49);
+}
+
 *,*::after, *::before{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
 }
 
 main{
     width: 100%;
     min-height: 100vh;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.dark-mode{
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.light-mode{
+    background-color: var(--light);
+    color: var(--dark);
 }
