@@ -2,16 +2,6 @@
 // LOCALSTORAGE FUNCTIONS
 // ------------------------------
 
-const storeName = "settings";
-
-export function setLocalStore(data = {}) {
-  localStorage.setItem(storeName, JSON.stringify(data));
-}
-
-export function getLocalStore() {
-  return JSON.parse(localStorage.getItem(storeName));
-}
-
 export function addToLocalStore(data = {}) {
   const store = getLocalStore();
   localStorage.setItem(storeName, JSON.stringify({ ...store, ...data }));

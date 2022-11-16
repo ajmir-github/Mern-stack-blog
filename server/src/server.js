@@ -29,12 +29,6 @@ function server(corsOptions) {
   // Payload func
   app.use(payload());
 
-  // // Error Handling
-  // if (process.env.NODE_ENV === "development") {
-  // }
-  // if (process.env.NODE_ENV === "production") {
-  // }
-
   // Routers
   app.use("/auth", authRouter);
   app.use("/user", userRouter);

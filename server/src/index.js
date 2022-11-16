@@ -14,7 +14,7 @@ database(DB_URL.replace("<password>", DB_PASSWORD));
 
 // Create the app
 const app = server({
-  methods: "GET, POST, PATCH, DELETE", // better that '*'
+  methods: "GET, POST, PATCH, PUT, DELETE", // better that '*'
   origin: FRONTEND_URL,
   credentials: true, // it needs the origin to be specified
   // preflightContinue: true,
