@@ -2,6 +2,7 @@
 const express = require("express");
 const UserModel = require("../model/UserModel");
 const secureToken = require("../utils/secureToken");
+const PostModel = require("../model/PostModel");
 
 // Global vars
 const router = express.Router();
@@ -17,30 +18,30 @@ const { authHeader } = require("../controller/authController");
 // Routes
 router.get(
   "/", // Get Posts
-  getPost
+  getPost(PostModel)
 );
 
 router.get(
-  "/:_id", // Get a single post
-  getSinglePost
+  "/:id", // Get a single post
+  getSinglePost(PostModel)
 );
 
 router.post(
   "/", // Create a Post
   authHeader(UserModel, secureToken),
-  createPost
+  createPost(PostModel)
 );
 
 router.delete(
-  "/:_id", // Delete a Post
+  "/:id", // Delete a Post
   authHeader(UserModel, secureToken),
-  deletePost
+  deletePost(PostModel)
 );
 
 router.patch(
   "/:_id", // Update a Post
   authHeader(UserModel, secureToken),
-  updatePost
+  updatePost(PostModel)
 );
 
 // export

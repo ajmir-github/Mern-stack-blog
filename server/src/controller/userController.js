@@ -4,14 +4,20 @@ const statusCodes = require("../utils/statusCodes");
 
 // GET /user
 exports.getUser =
-  (UserModel, UserLimit = 10, defaultSort = { date: -1 }) =>
+  (
+    UserModel,
+    UserLimit = 10,
+    defaultSort = { date: -1 },
+    populteKey = "posts",
+    populateOptions = undefined // select, limit, sort
+  ) =>
   async (req, res) => {
     try {
       const users = await UserModel.find(undefined, "-password")
         .sort(defaultSort)
         .limit(+req.query.limit || UserLimit)
         .skip(+req.query.skip || 0)
-        .populate("posts");
+        .populate(populteKey, populateOptions);
       // not content
       if (users.length === 0)
         throw {
