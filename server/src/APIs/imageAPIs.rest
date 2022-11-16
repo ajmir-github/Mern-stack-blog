@@ -11,9 +11,9 @@ Content-Type: image/jpg
 
 
 ### Get the image itself
-DELETE http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
+DELETE http://localhost:4000/image/6a6c899c-af3a-4621-84f8-8f50f5224e54.jpg
 ### Get the image itself
-GET http://localhost:4000/image/d6c8d18a-33ca-451f-ad18-d4c3cdfc969a.jpg
+GET http://localhost:4000/image/6a6c899c-af3a-4621-84f8-8f50f5224e54.jpg
 ### Get the coverted version
-GET http://localhost:4000/image/2cf6ca83-1409-4313-8bc3-da8d7112aa7d.jpg
+GET http://localhost:4000/image/6a6c899c-af3a-4621-84f8-8f50f5224e54.jpg
   ?size=xs
