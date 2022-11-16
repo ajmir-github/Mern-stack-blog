@@ -7,8 +7,7 @@ exports.getPost =
   (
     PostModel,
     defaultLimit = 10,
-    populteKey = "createdBy",
-    populateOptions = { select: "-password" }
+    populateOptions = { path: "createdBy", select: "_id username img" }
   ) =>
   async (req, res) => {
     try {
@@ -16,12 +15,12 @@ exports.getPost =
         .sort({ date: -1 })
         .limit(+req.query.limit || defaultLimit)
         .skip(+req.query.skip || 0)
-        .populate(populteKey, populateOptions);
+        .populate(populateOptions);
       // not users
-      if (user.length === 0)
+      if (posts.length === 0)
         throw {
           message: "No posts found!",
-          status: statusCodes.NO_CONTENT,
+          status: statusCodes.OK,
         };
       // send the posts
       res.json(posts);
@@ -37,14 +36,11 @@ exports.getSinglePost =
   (
     PostModel,
     incrementToView = 1,
-    populteKey = "createdBy",
-    populateOptions = { select: "-password" }
+    populateOptions = { path: "createdBy", select: "_id username img" }
   ) =>
   async (req, res) => {
     try {
-      const { id } = req.params;
-      const post = await PostModel.findById(id).populate(
-        populteKey,
+      const post = await PostModel.findById(req.params.id).populate(
         populateOptions
       );
 
@@ -98,8 +94,7 @@ exports.deletePost =
     try {
       // Delete the post
       const user = req.payload.get(userKey);
-      const { id } = req.params;
-      const post = await PostModel.findById(id);
+      const post = await PostModel.findById(req.params.id);
       // Is this user allowed
       if (user.toString() !== post[refKey].toString())
         throw {
@@ -108,9 +103,7 @@ exports.deletePost =
         };
       // delete
       await post.remove();
-      res
-        .status(statusCodes.NO_CONTENT)
-        .send("A post with the given id was deleted!");
+      res.status(statusCodes.OK).send("A post with the given id was deleted!");
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)
@@ -125,7 +118,7 @@ exports.updatePost =
     try {
       // update the post
       const user = req.payload.get(userKey);
-      const post = await PostModel.findById(req.params._id);
+      const post = await PostModel.findById(req.params.id);
       // Is this user allowed
       const userId = user._id.toString();
       const createdById = post[refKey].toString();
@@ -137,9 +130,7 @@ exports.updatePost =
       // update
       await post.set({ ...req.body }).save();
       // give a response back
-      res
-        .status(statusCodes.NO_CONTENT)
-        .send("A post with the given id is updated!");
+      res.status(statusCodes.OK).send("A post with the given id is updated!");
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)

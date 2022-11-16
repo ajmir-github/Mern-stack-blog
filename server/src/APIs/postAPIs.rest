@@ -4,27 +4,27 @@ GET http://localhost:4000/post
   &skip=0
 
 ### GET A SINGLE POST
-GET http://localhost:4000/post/636e207b72db0cbb7f588de5
+GET http://localhost:4000/post/6375177357552633c58dc4fd
 
 
 ### CREATE A POST
 POST http://localhost:4000/post
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
-
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM3NTE3NTM1NzU1MjYzM2M1OGRjNGY3.bCGEcBsfxGiWBUKPBae55oAo4Eb8lMrXA26ZwQXOzP8
 
 {
   "title":"How to speak!",
   "body":"post validation failed: createdBy: Path `createdBy` is required., body: Path `body` is required., title: Path `title` is required."
 }
 ### DELETE A POST
-DELETE  http://localhost:4000/post/636e1ea81e59a87a35948d87
+DELETE  http://localhost:4000/post/6375177357552633c58dc4fd
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM3NTE3NTM1NzU1MjYzM2M1OGRjNGY3.bCGEcBsfxGiWBUKPBae55oAo4Eb8lMrXA26ZwQXOzP8
+
 
 ### Upldate A POST
-PATCH  http://localhost:4000/post/636e207b72db0cbb7f588de5
+PATCH  http://localhost:4000/post/6375177357552633c58dc4fd
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.NjM2ZTFlMmIxZTU5YTg3YTM1OTQ4ZDdh.tbX7WvsOtd1xFcvvGx-MyeQDfgkfG65cuI-NUhk4y-c
-
+Authorization: eyJhbGciOiJIUzI1NiJ9.NjM3NTE3NTM1NzU1MjYzM2M1OGRjNGY3.bCGEcBsfxGiWBUKPBae55oAo4Eb8lMrXA26ZwQXOzP8
 
 {
   "title":"Cosmopolitan"

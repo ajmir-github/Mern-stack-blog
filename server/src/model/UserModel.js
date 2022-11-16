@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema(
         ref: "post",
       },
     ],
+    date: {
+      type: Date,
+      default: Date.now,
+    },
     views: {
       type: Number,
       default: 0,

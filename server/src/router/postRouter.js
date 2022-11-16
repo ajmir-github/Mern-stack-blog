@@ -39,7 +39,7 @@ router.delete(
 );
 
 router.patch(
-  "/:_id", // Update a Post
+  "/:id", // Update a Post
   authHeader(UserModel, secureToken),
   updatePost(PostModel)
 );
