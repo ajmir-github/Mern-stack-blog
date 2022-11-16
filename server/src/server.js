@@ -16,6 +16,7 @@ const imageRouter = require("./router/imageRouter");
 function server(corsOptions) {
   // Server setup
   const app = express();
+  app.use(express.static(path.join(__dirname, "public")));
   app.use(cors(corsOptions));
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
@@ -23,7 +24,7 @@ function server(corsOptions) {
   app.use(
     fileUpload({
       useTempFiles: true,
-      tempFileDir: path.join(__dirname, "tmp"),
+      tempFileDir: path.join(__dirname, "temp"),
     })
   );
   // Payload func
