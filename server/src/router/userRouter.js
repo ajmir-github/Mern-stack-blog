@@ -23,7 +23,7 @@ router.get(
 
 // Routes
 router.get(
-  "/:_id", // Get A Single user
+  "/:id", // Get A Single user
   getSingleUser(UserModel)
 );
 
@@ -41,7 +41,7 @@ router.delete(
 router.patch(
   "/", // Update a user
   authHeader(UserModel, secureToken),
-  updateUser()
+  updateUser(UserModel, hash)
 );
 
 // export

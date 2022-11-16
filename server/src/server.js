@@ -27,7 +27,7 @@ function server(corsOptions) {
     })
   );
   // Payload func
-  app.use(payload);
+  app.use(payload());
 
   // // Error Handling
   // if (process.env.NODE_ENV === "development") {

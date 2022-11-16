@@ -8,21 +8,19 @@ exports.getUser =
     UserModel,
     UserLimit = 10,
     defaultSort = { date: -1 },
-    populteKey = "posts",
-    populateOptions = undefined // select, limit, sort
+    projection = "-password -posts"
   ) =>
   async (req, res) => {
     try {
-      const users = await UserModel.find(undefined, "-password")
+      const users = await UserModel.find(undefined, projection)
         .sort(defaultSort)
         .limit(+req.query.limit || UserLimit)
-        .skip(+req.query.skip || 0)
-        .populate(populteKey, populateOptions);
+        .skip(+req.query.skip || 0);
       // not content
       if (users.length === 0)
         throw {
           message: "No users found!",
-          status: statusCodes.NO_CONTENT,
+          status: statusCodes.OK,
         };
       // send users
       res.json(users);
@@ -35,18 +33,23 @@ exports.getUser =
 
 // USER /user/:_id
 exports.getSingleUser =
-  (UserModel, PostLimit = 10, IncrementToViews = 2) =>
+  (
+    UserModel,
+    userProjection = "-password",
+    IncrementToViews = 2,
+    DefaultPostPopulateOptions = {
+      sort: { date: -1 },
+      limit: 10,
+      skip: 0,
+    }
+  ) =>
   async (req, res) => {
     try {
-      const { _id } = req.params;
-      const user = await UserModel.findById(_id, "-password").populate({
-        path: "posts",
-        options: {
-          sort: { date: -1 },
-          limit: +req.query.limit || PostLimit,
-          skip: +req.query.skip || 0,
-        },
-      });
+      const { id } = req.params;
+      const user = await UserModel.findById(id, userProjection).populate(
+        "posts",
+        DefaultPostPopulateOptions
+      );
       // if not exist
       if (user === null)
         throw {
@@ -71,23 +74,23 @@ exports.getSingleUser =
 exports.createUser = (UserModel, hash) => async (req, res) => {
   try {
     // Check this username is created or not
-    const { username } = req.body;
-    if ((await UserModel.findOne({ username })) !== null)
+    const inputs = req.body;
+    if ((await UserModel.findOne({ username: inputs.username })) !== null)
       throw {
         message: "A user is already created by this username!",
         status: statusCodes.BAD_REQUEST,
       };
     // hash password
-    if (typeof req.body?.password !== "undefined") {
-      req.body.password = await hash(req.body?.password);
+    if (typeof inputs?.password !== "undefined") {
+      inputs.password = await hash(inputs?.password);
     }
     // Create it
     const User = new UserModel({
-      ...req.body,
+      ...inputs,
     });
-    const { _id } = await User.save();
+    const createdUser = await User.save();
     // Send back the user id
-    res.status(statusCodes.CREATED).send(_id);
+    res.status(statusCodes.CREATED).send(createdUser._id);
   } catch ({ message, status }) {
     res
       .status(status || statusCodes.SERVER_ERROR)
@@ -97,14 +100,14 @@ exports.createUser = (UserModel, hash) => async (req, res) => {
 
 // DELETE /user
 exports.deleteUser =
-  (userKey = "authUser") =>
+  (authUserKey = "authUser") =>
   async (req, res) => {
     try {
       // Get the ID param
-      const user = req.payload.get(userKey);
+      const user = req.payload.get(authUserKey);
       await user.remove();
       // response
-      res.status(statusCodes.NO_CONTENT).send("The user is deleted!");
+      res.status(statusCodes.OK).send("The user is deleted!");
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)
@@ -114,14 +117,30 @@ exports.deleteUser =
 
 // UPDATE /user
 exports.updateUser =
-  (userKey = "authUser") =>
+  (UserModel, hash, authUserKey = "authUser") =>
   async (req, res) => {
     try {
       // Update the user
-      const user = req.payload.get(userKey);
-      await user.set({ ...req.body }).save();
+      const inputs = req.body;
+      const user = req.payload.get(authUserKey);
+      // update username by making sure that its unique
+      if (typeof inputs?.username !== "undefined") {
+        if ((await UserModel.findOne({ username: inputs?.username })) !== null)
+          throw {
+            message: "A user is already created by this username!",
+            status: statusCodes.BAD_REQUEST,
+          };
+      }
+      // update password by hashing it
+      if (typeof inputs?.password !== "undefined") {
+        inputs.password = await hash(inputs?.password);
+      }
+      // apply the changes
+      await user.set({ ...inputs }).save();
+      // hide the password
+      if (typeof inputs.password !== "undefined") delete inputs.password;
       // response
-      res.status(statusCodes.NO_CONTENT).send("The user is updated!");
+      res.status(statusCodes.OK).send(inputs);
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)
