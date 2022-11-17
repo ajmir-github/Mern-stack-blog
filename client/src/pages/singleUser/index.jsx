@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleUser } from "../../services";
+import { getSingleUser, imageURL } from "../../services";
 
 export default function SingleUser() {
   const [loading, setLoading] = useState(true);
@@ -12,11 +12,32 @@ export default function SingleUser() {
       .then((res) => {
         setUser(res.data);
         setLoading(false);
+        console.log(res.data);
       })
       .catch((res) => {
         console.warn(res);
       });
   }, [id]);
 
-  return <>{loading ? <h1>Loading</h1> : <h1>{user.fullName}</h1>}</>;
+  return (
+    <>
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
+        <>
+          <img
+            src={
+              typeof user.img === "undefined"
+                ? "/assets/unknown_user.jpg"
+                : imageURL(user.img, "xs")
+            }
+          />
+          <div>Full Name: {user.fullName}</div>
+          <div>title: {user.title}</div>
+          <div>Email: {user.email}</div>
+          <hr />
+        </>
+      )}
+    </>
+  );
 }

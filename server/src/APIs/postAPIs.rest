@@ -2,6 +2,16 @@
 GET http://localhost:4000/post
   ?limit=10
   &skip=0
+### GET POSTs
+GET http://localhost:4000/post
+  ?search=here
+### GET POSTs
+GET http://localhost:4000/post
+  ?keyword=a
+### GET POSTs of a user
+GET http://localhost:4000/post
+  ?user=6375175357552633c58dc4f7
+  &search=cos
 
 ### GET A SINGLE POST
 GET http://localhost:4000/post/6375177357552633c58dc4fd

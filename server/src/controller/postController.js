@@ -1,6 +1,15 @@
-const { PostModel } = require("../model/PostModel");
-const { UserModel } = require("../model/UserModel");
 const statusCodes = require("../utils/statusCodes");
+
+// util Func
+async function incremetPostViews(post, incrementToView) {
+  try {
+    // increment views to post
+    post.views += incrementToView;
+    await post.save();
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 // GET /post
 exports.getPost =
@@ -10,8 +19,27 @@ exports.getPost =
     populateOptions = { path: "createdBy", select: "_id fullName img" }
   ) =>
   async (req, res) => {
+    let query = {};
+    // Search Query
+    if (typeof req.query.search !== "undefined") {
+      const pattern = { $regex: req.query.search, $options: "gi" };
+      query.$or = [
+        { title: pattern },
+        { excerpt: pattern },
+        { keywords: pattern },
+      ];
+    }
+    // filter Query
+    if (typeof req.query.keyword !== "undefined") {
+      query.keywords = { $regex: req.query.keyword, $options: "gi" };
+    }
+    // user's id posts
+    if (typeof req.query.user !== "undefined") {
+      query.createdBy = req.query.user;
+    }
+
     try {
-      const posts = await PostModel.find(undefined, "-body -keywords")
+      const posts = await PostModel.find(query, "-body -keywords")
         .sort({ date: -1 })
         .limit(+req.query.limit || defaultLimit)
         .skip(+req.query.skip || 0)
@@ -36,7 +64,7 @@ exports.getSinglePost =
   (
     PostModel,
     incrementToView = 1,
-    populateOptions = { path: "createdBy", select: "_id fullName img" }
+    populateOptions = { path: "createdBy", select: "_id fullName img views" }
   ) =>
   async (req, res) => {
     try {
@@ -53,9 +81,7 @@ exports.getSinglePost =
       // send the post
       res.json(post);
 
-      // increment views to post
-      post.views += incrementToView;
-      await post.save();
+      incremetPostViews(post, incrementToView);
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)

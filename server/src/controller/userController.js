@@ -11,8 +11,20 @@ exports.getUser =
     projection = "_id img fullName title"
   ) =>
   async (req, res) => {
+    let query = {};
+    // Search Query
+    if (typeof req.query.search !== "undefined") {
+      const pattern = { $regex: req.query.search, $options: "gi" };
+      query = {
+        $or: [{ fullName: pattern }, { title: pattern }],
+      };
+    }
+    // filter Query
+    if (typeof req.query.title !== "undefined") {
+      query.title = { $regex: req.query.title, $options: "ig" };
+    }
     try {
-      const users = await UserModel.find(undefined, projection)
+      const users = await UserModel.find(query, projection)
         .sort(defaultSort)
         .limit(+req.query.limit || UserLimit)
         .skip(+req.query.skip || 0);
@@ -35,21 +47,13 @@ exports.getUser =
 exports.getSingleUser =
   (
     UserModel,
-    userProjection = "-password",
-    IncrementToViews = 2,
-    DefaultPostPopulateOptions = {
-      path: "posts",
-      sort: { date: -1 },
-      limit: 10,
-      skip: 0,
-    }
+    userProjection = "-password -date -posts -username",
+    IncrementToViews = 2
   ) =>
   async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await UserModel.findById(id, userProjection).populate(
-        DefaultPostPopulateOptions
-      );
+      const user = await UserModel.findById(id, userProjection);
       // if not exist
       if (user === null)
         throw {
