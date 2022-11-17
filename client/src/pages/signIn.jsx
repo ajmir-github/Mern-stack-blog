@@ -2,16 +2,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SignInForm from "../components/SignInForm";
-import userAuthEffect from "../hooks/userAuthEffect";
 import { signIn } from "../services";
 import { authAction } from "../state";
 
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  userAuthEffect((signed) => {
-    if (signed) navigate("/profile");
-  });
 
   const [state, setState] = useState({
     error: false,

@@ -1,15 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
-import useAuthEffect from "../hooks/userAuthEffect";
 import { signUp } from "../services";
 
 export default function SignUp() {
-  const navigate = useNavigate();
-  useAuthEffect((signed) => {
-    if (signed) navigate("/profile");
-  });
-
   const [state, setState] = useState({
     error: false,
     message: "",

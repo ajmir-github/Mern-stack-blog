@@ -1,5 +1,7 @@
 # MERN-STACK WEB APPLICATION
 
+# Developed by Ajmir Raziqi
+
 ## Summary
 
 This is a blog website with user authentication system. it lets the user to post only text. Users can only create user with a unique username. It uses BcryptJS for hashing the user's password. and JsonWebToken to tokenize.
@@ -46,7 +48,7 @@ function App() {
 - Project was published in to the github
 - Newer version of node only uses protocl ip address instead of localhost:3000
 
-
 ## Git config
+
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
