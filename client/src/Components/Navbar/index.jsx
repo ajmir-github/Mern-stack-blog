@@ -30,9 +30,6 @@ export default function Navbar() {
         </li>
 
         <li>
-          <Link to={"/post/sf2389fj3409kf"}>Post: sf2389fj3409kf</Link>
-        </li>
-        <li>
           <Link to={"/sign_in"}>SIGN IN</Link>
         </li>
         <li>
