@@ -28,6 +28,9 @@ export default function Navbar() {
         <li>
           <Link to={"/"}>HOME</Link>
         </li>
+        <li>
+          <Link to={"/users"}>USERS</Link>
+        </li>
 
         <li>
           <Link to={"/sign_in"}>SIGN IN</Link>

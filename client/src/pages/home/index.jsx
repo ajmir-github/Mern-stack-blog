@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PostsContainer from "../components/PostsContainer";
-import { getPost } from "../services";
-import { postAction } from "../state";
+import PostsContainer from "../../components/PostsContainer";
+import { getPost } from "../../services";
+import { postAction } from "../../state";
 
 export default function Home() {
   const dispatch = useDispatch();

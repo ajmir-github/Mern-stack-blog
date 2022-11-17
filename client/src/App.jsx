@@ -14,6 +14,8 @@ import Navbar from "./components/Navbar";
 // pages
 import Home from "./pages/home";
 import SinglePost from "./pages/singlePost";
+import Users from "./pages/users";
+import SingleUser from "./pages/singleUser";
 import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";
@@ -43,6 +45,9 @@ export default function App() {
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route path="/post/:id" element={<SinglePost />} />
+
+          <Route index path="/users" element={<Users />} />
+          <Route path="/user/:id" element={<SingleUser />} />
 
           {/* Only unsigned users */}
           <Route element={onlyUnsignedUsers}>

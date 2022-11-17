@@ -8,7 +8,7 @@ exports.getUser =
     UserModel,
     UserLimit = 10,
     defaultSort = { date: -1 },
-    projection = "-password -posts"
+    projection = "_id img fullName title"
   ) =>
   async (req, res) => {
     try {
@@ -38,6 +38,7 @@ exports.getSingleUser =
     userProjection = "-password",
     IncrementToViews = 2,
     DefaultPostPopulateOptions = {
+      path: "posts",
       sort: { date: -1 },
       limit: 10,
       skip: 0,
@@ -47,7 +48,6 @@ exports.getSingleUser =
     try {
       const { id } = req.params;
       const user = await UserModel.findById(id, userProjection).populate(
-        "posts",
         DefaultPostPopulateOptions
       );
       // if not exist
