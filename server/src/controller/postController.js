@@ -7,11 +7,11 @@ exports.getPost =
   (
     PostModel,
     defaultLimit = 10,
-    populateOptions = { path: "createdBy", select: "_id username img" }
+    populateOptions = { path: "createdBy", select: "_id fullName img" }
   ) =>
   async (req, res) => {
     try {
-      const posts = await PostModel.find()
+      const posts = await PostModel.find(undefined, "-body -keywords")
         .sort({ date: -1 })
         .limit(+req.query.limit || defaultLimit)
         .skip(+req.query.skip || 0)
@@ -36,7 +36,7 @@ exports.getSinglePost =
   (
     PostModel,
     incrementToView = 1,
-    populateOptions = { path: "createdBy", select: "_id username img" }
+    populateOptions = { path: "createdBy", select: "_id fullName img" }
   ) =>
   async (req, res) => {
     try {

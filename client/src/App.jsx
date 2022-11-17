@@ -13,7 +13,7 @@ import Navbar from "./components/Navbar";
 
 // pages
 import Home from "./pages/home";
-import Post from "./pages/post";
+import SinglePost from "./pages/singlePost";
 import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";
@@ -42,7 +42,7 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route index path="/" element={<Home />} />
-          <Route path="/post/:id" element={<Post />} />
+          <Route path="/post/:id" element={<SinglePost />} />
 
           {/* Only unsigned users */}
           <Route element={onlyUnsignedUsers}>

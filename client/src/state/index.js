@@ -3,16 +3,18 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { authReducer, authAction } from "./authReducer";
 import { viewReducer, viewAction } from "./viewReducer";
+import { postReducer, postAction } from "./postReducer";
 import { hasCookie, getCookie, removeCookie } from "../utils/cookie";
 import { authToken } from "../services";
 
 // Export Actions
-export { authAction, viewAction };
+export { authAction, viewAction, postAction };
 
 // Reducers
 const reducers = {
   auth: authReducer,
   view: viewReducer,
+  post: postReducer,
 };
 
 // Store

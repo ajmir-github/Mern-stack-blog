@@ -27,7 +27,6 @@ export default function UploadCaptionForm({ postIdRef, setPosted }) {
 
   const submit = (e) => {
     e.preventDefault();
-    postIdRef.current = "63767a3df965dc24d8c61f61";
     const files = inputRef.current.files;
     if (files.length === 0) return setMessage("Please select an image!");
     upload(e.target);
