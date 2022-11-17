@@ -1,18 +1,30 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleUser, imageURL } from "../../services";
+import { getSingleUser, imageURL, getPost } from "../../services";
+import PostsContainer from "../../components/PostsContainer";
 
 export default function SingleUser() {
   const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
   const { id } = useParams();
   useEffect(() => {
     setLoading(true);
     getSingleUser(id)
       .then((res) => {
+        // this user's data fetched
         setUser(res.data);
-        setLoading(false);
-        console.log(res.data);
+        // get the posts of this user
+        getPost({ user: id })
+          .then((res) => {
+            // posts fetched
+            console.log(res);
+            // setPosts(res.data);
+            setLoading(false);
+          })
+          .catch((res) => {
+            console.warn(res);
+          });
       })
       .catch((res) => {
         console.warn(res);
@@ -36,6 +48,8 @@ export default function SingleUser() {
           <div>title: {user.title}</div>
           <div>Email: {user.email}</div>
           <hr />
+
+          <PostsContainer posts={posts} />
         </>
       )}
     </>

@@ -1,4 +1,15 @@
 const statusCodes = require("../utils/statusCodes");
+
+// Util Funcs
+async function incrementUserView(user, incrementToView) {
+  try {
+    user.views += IncrementToViews;
+    await user.save();
+  } catch (error) {
+    console.log(error.messag);
+  }
+}
+
 // --------------------------------
 // Standalon Meddlewares
 
@@ -32,7 +43,7 @@ exports.getUser =
       if (users.length === 0)
         throw {
           message: "No users found!",
-          status: statusCodes.OK,
+          status: statusCodes.NO_CONTENT,
         };
       // send users
       res.json(users);
@@ -65,8 +76,7 @@ exports.getSingleUser =
       res.json(user);
 
       // Increment views
-      user.views += IncrementToViews;
-      await user.save();
+      incrementUserView(user, IncrementToViews);
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)

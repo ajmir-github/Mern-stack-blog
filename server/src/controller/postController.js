@@ -48,7 +48,7 @@ exports.getPost =
       if (posts.length === 0)
         throw {
           message: "No posts found!",
-          status: statusCodes.OK,
+          status: statusCodes.NO_CONTENT,
         };
       // send the posts
       res.json(posts);
