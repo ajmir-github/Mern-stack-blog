@@ -6,6 +6,14 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    keywords: {
+      type: String,
+      required: true,
+    },
+    excerpt: {
+      type: String,
+      required: true,
+    },
     body: {
       type: String,
       required: true,
