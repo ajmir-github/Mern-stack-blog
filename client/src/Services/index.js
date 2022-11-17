@@ -12,13 +12,26 @@ const server = axios.create({
 
 // ----------------- IMAGE APIS
 // UPLOAD AN IMAGE
+export function uploadImage(formData, setProgress) {
+  // main func
+  return server.post("/image", formData, {
+    onUploadProgress: (e) => {
+      setProgress(Math.floor((e.loaded / e.total) * 100));
+    },
+  });
+}
+
+// DELETE AN IMAGE
+export function deleteImage(imageURL) {
+  return server.delete(imageURL);
+}
 
 // GET THE IMAGE RELATIVE URL
-export function imageURL(imageName, size = null) {
-  let str = "/image/" + imageName;
-  if (size !== null) str += size;
-  return baseURL + str;
+export function imageURL(imageURL, size = null) {
+  if (size !== null) imageURL += "?size=" + size;
+  return baseURL + imageURL;
 }
+
 // ----------------- AUTH APIS
 // POST SIGN IN
 export function signIn(user) {
@@ -27,7 +40,8 @@ export function signIn(user) {
 
 // POST AUTHETICATE TOKEN
 export function authToken(token) {
-  return server.post("/auth/verify_token", { token });
+  // return server.post("/auth/verify_token", { token });
+  return server.post("/auth/verify_token");
 }
 
 // ----------------- USER APIS

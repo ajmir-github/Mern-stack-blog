@@ -1,12 +1,16 @@
 // imports
 // componenets
-import UserDescription from "./userProfile";
+// import UserProfile from "./userProfile";
+import Feed from "./feed";
 
 export default function Profile() {
   return (
     <>
-      <h1>Profile page</h1>
-      <UserDescription />
+      {/* user profile */}
+      {/* <UserProfile /> */}
+      {/* feed */}
+      <Feed />
+      {/*  your posts posts */}
     </>
   );
 }

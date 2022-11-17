@@ -140,7 +140,7 @@ exports.updateUser =
       // hide the password
       if (typeof inputs.password !== "undefined") delete inputs.password;
       // response
-      res.status(statusCodes.OK).send(inputs);
+      res.status(statusCodes.OK).send("User updated!");
     } catch ({ message, status }) {
       res
         .status(status || statusCodes.SERVER_ERROR)

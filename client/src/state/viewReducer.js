@@ -10,7 +10,7 @@ function setLocalTheme(themeMode) {
   localStorage.setItem(localThemeKey, themeMode);
 }
 
-const initState = {
+const view = {
   theme: getLocalTheme(),
   loading: true,
 };
@@ -22,7 +22,7 @@ export const viewAction = {
   stopLoading: "STOP_LOADING",
 };
 
-export function viewReducer(state = initState, { type }) {
+export function viewReducer(state = view, { type }) {
   switch (type) {
     case viewAction.startLoading:
       return { ...state, loading: true };

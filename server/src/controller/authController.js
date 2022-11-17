@@ -37,11 +37,16 @@ exports.signIn =
 
 // Standalone Meddleware
 exports.verifyToken =
-  (UserModel, secureToken, projection = "-password -posts -views") =>
+  (
+    UserModel,
+    secureToken,
+    authTokenKey = "authToken",
+    projection = "-password -posts -views"
+  ) =>
   async (req, res) => {
     try {
       // Get the sent token
-      const { token } = req.body;
+      const token = req.payload.get(authTokenKey);
       if (typeof token === "undefined")
         throw {
           message: "Provide a token!",
