@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleUser, imageURL, getPost } from "../../services";
+
+// components
 import PostsContainer from "../../components/PostsContainer";
+import GoBack from "../../components/GoBack";
 
 export default function SingleUser() {
   const [loading, setLoading] = useState(true);
@@ -49,6 +52,7 @@ export default function SingleUser() {
           <hr />
 
           <PostsContainer posts={posts} />
+          <GoBack />
         </>
       )}
     </>

@@ -1,40 +1,150 @@
-import { useRef } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { red } from "@mui/material/colors";
+import { useState } from "react";
 
-export default function SignUpForm({ submit, state }) {
-  // Ref containers
-  const fullNameRef = useRef(null);
-  const titleRef = useRef(null);
-  const emailRef = useRef(null);
-  const usernameRef = useRef(null);
-  const passwordRef = useRef(null);
-  // validation
-  const validateForm = e => {
-    e.preventDefault();
-    const fullName = fullNameRef.current.value;
-    const title = titleRef.current.value;
-    const email = emailRef.current.value;
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
+export default function SignUp({ submit, state }) {
+  const [passwordError, setPasswordError] = useState({
+    error: false,
+    message: "",
+  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // inputs
+    const username = data.get("username");
+    const password = data.get("password");
+    const confirmPassword = data.get("confirmPassword");
+    const fullName = data.get("fullName");
+    const email = data.get("email");
+    const title = data.get("title");
+    // validations
+    if (password !== confirmPassword)
+      return setPasswordError({
+        error: true,
+        message: "Confirm password not matched!",
+      });
+
+    // submission
     submit({
-      fullName,
-      title,
-      email,
       username,
-      password
-    })
+      password,
+      fullName,
+      email,
+      title,
+    });
   };
-  // main element
-  return <form onSubmit={validateForm}>
-    {state.error && (
-      <div>
-        <i style={{ color: "red" }}>{state.message}</i>
-      </div>
-    )}
-    <input type="text" placeholder="Full Name" ref={fullNameRef} required />
-    <input type="text" placeholder="Title" ref={titleRef} required />
-    <input type="email" placeholder="Email" ref={emailRef} required />
-    <input type="text" placeholder="Username" ref={usernameRef} required />
-    <input type="password" placeholder="Password" ref={passwordRef} required />
-    <input type="submit" value="Sign up" />
-  </form>
+
+  return (
+    <Container sx={{ pt: 2, pb: 12 }} maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1 }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="password"
+                required
+                fullWidth
+                id="password"
+                label="Password"
+                error={passwordError.error}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                id="confirmPassword"
+                label="Confirm Password"
+                name="confirmPassword"
+                error={passwordError.error}
+                helperText={passwordError.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="fullName"
+                label="Full Name"
+                name="fullName"
+                autoComplete="Full Name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                name="title"
+                autoComplete="Vacation"
+              />
+            </Grid>
+          </Grid>
+          {state.error && (
+            <Typography variant="body1" sx={{ color: red[500] }}>
+              {state.message}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link to="/sign_in" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
+  );
 }

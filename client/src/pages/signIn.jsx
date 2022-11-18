@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import SignInForm from "../components/SignInForm";
 import { signIn } from "../services";
-import { authAction } from "../state";
+import { authAction, viewAction } from "../state";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ export default function SignIn() {
     message: "",
   });
   const submit = (user) => {
+    dispatch({ type: viewAction.startLoading });
     signIn(user)
       .then((res) => {
         // update the state
@@ -26,12 +27,8 @@ export default function SignIn() {
           error: true,
           message: data,
         });
-      });
+      })
+      .finally(() => dispatch({ type: viewAction.stopLoading }));
   };
-  return (
-    <>
-      <h1>Sign In</h1>
-      <SignInForm submit={submit} state={state} />
-    </>
-  );
+  return <SignInForm submit={submit} state={state} />;
 }

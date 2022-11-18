@@ -11,6 +11,7 @@ const userRouter = require("./router/userRouter");
 const authRouter = require("./router/authRouter");
 const postRouter = require("./router/postRouter");
 const imageRouter = require("./router/imageRouter");
+const utilRouter = require("./router/utilRouter");
 
 // Main server func
 function server(corsOptions) {
@@ -34,6 +35,7 @@ function server(corsOptions) {
   app.use("/auth", authRouter);
   app.use("/user", userRouter);
   app.use("/post", postRouter);
+  app.use("/util", utilRouter);
   app.use("/image", imageRouter);
 
   // for front-end tests

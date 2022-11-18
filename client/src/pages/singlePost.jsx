@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getSinglePost, imageURL } from "../services";
 import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
+// components
+import GoBack from "../components/GoBack";
 
 function Post({ post }) {
   return (
@@ -59,5 +61,12 @@ export default function SinglePost() {
         console.warn(res);
       });
   }, [id]);
-  return <>{loaded && <Post post={post} />}</>;
+  return (
+    loaded && (
+      <>
+        <Post post={post} />
+        <GoBack />
+      </>
+    )
+  );
 }

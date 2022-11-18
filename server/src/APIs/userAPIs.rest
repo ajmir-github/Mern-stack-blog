@@ -8,6 +8,7 @@ GET http://localhost:4000/user
 GET http://localhost:4000/user
   ?title=sta
 
+
 ### GET A Single USER
 GET http://localhost:4000/user/6375175357552633c58dc4f7
 

@@ -20,10 +20,5 @@ export default function SignUp() {
           message: data,
         });
       });
-  return (
-    <>
-      <h1>Sign Up</h1>
-      <SignUpForm submit={submit} state={state} />
-    </>
-  );
+  return <SignUpForm submit={submit} state={state} />;
 }

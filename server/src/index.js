@@ -17,7 +17,6 @@ const app = server({
   methods: "GET, POST, PATCH, PUT, DELETE", // better that '*'
   origin: FRONTEND_URL,
   credentials: true, // it needs the origin to be specified
-  // preflightContinue: true,
 });
 
 // Server Activator

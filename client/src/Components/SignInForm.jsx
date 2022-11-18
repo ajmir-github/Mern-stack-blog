@@ -1,35 +1,85 @@
-import { useRef } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { red } from "@mui/material/colors";
 
-export default function SignUpForm({ submit, state }) {
-  // Ref containers
-  const usernameRef = useRef(null);
-  const passwordRef = useRef(null);
-  // validation
-  const validateForm = (e) => {
-    e.preventDefault();
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
+export default function SignIn({ submit, state }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    //submit
     submit({
-      username,
-      password,
+      username: data.get("username"),
+      password: data.get("password"),
     });
   };
-  // main element
+
   return (
-    <form onSubmit={validateForm}>
-      {state.error && (
-        <div>
-          <i style={{ color: "red" }}>{state.message}</i>
-        </div>
-      )}
-      <input type="text" placeholder="Username" ref={usernameRef} required />
-      <input
-        type="password"
-        placeholder="Password"
-        ref={passwordRef}
-        required
-      />
-      <input type="submit" value="Sign in" />
-    </form>
+    <Container sx={{ pt: 2, pb: 12 }} maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1 }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          {state.error && (
+            <Typography variant="body1" sx={{ color: red[500] }}>
+              {state.message}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link to="/forget_password">Forgot password?</Link>
+            </Grid>
+            <Grid item>
+              <Link to="/sign_up">Don't have an account? Sign Up</Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 }
