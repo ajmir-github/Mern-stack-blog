@@ -18,12 +18,10 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <h1>HOME PAGE</h1>
       {post.isEmpty ? (
         <h1>Loading Posts</h1>
       ) : (
         <>
-          <h4>Filter and search</h4>
           <PostsContainer posts={post.posts} />
         </>
       )}

@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
+import StyleProvider from "./utils/StyleProvider";
 
 // components
 import Navbar from "./components/Navbar";
@@ -20,18 +21,6 @@ import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";
 import NotFound from "./pages/notFound";
-import LoadingPage from "./pages/loadingPage";
-
-function ViewElement({ children }) {
-  // this setup the whole theme
-  // it stops rendering the whole app and shows loading page
-  const { theme, loading } = useSelector((s) => s.view);
-  return (
-    <main className={theme === "light" ? "light-mode" : "dark-mode"}>
-      {loading ? <LoadingPage /> : children}
-    </main>
-  );
-}
 
 // Main func
 export default function App() {
@@ -39,7 +28,7 @@ export default function App() {
   const onlySignedUsers = signed ? <Outlet /> : <Navigate to="/sign_in" />;
   const onlyUnsignedUsers = signed ? <Navigate to="/profile" /> : <Outlet />;
   return (
-    <ViewElement>
+    <StyleProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -63,6 +52,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </ViewElement>
+    </StyleProvider>
   );
 }

@@ -30,11 +30,14 @@ function Post({ post }) {
       ) : (
         <h1>{post.title}</h1>
       )}
-      <ul>
-        {post.keywords.split(",").map((keyword) => (
-          <li>{keyword.trim()}</li>
-        ))}
-      </ul>
+
+      {typeof post.keywords !== "undefined" && (
+        <ul>
+          {post.keywords.split(",").map((keyword) => (
+            <li>{keyword.trim()}</li>
+          ))}
+        </ul>
+      )}
       <p>{post.keywords}</p>
       <p>{post.excerpt}</p>
       <p>{post.body}</p>
@@ -43,18 +46,18 @@ function Post({ post }) {
 }
 
 export default function SinglePost() {
-  const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const [post, setPost] = useState(null);
   const { id } = useParams();
   useEffect(() => {
     getSinglePost(id)
       .then((res) => {
-        setLoading(false);
+        setLoaded(true);
         setPost(res.data);
       })
       .catch((res) => {
         console.warn(res);
       });
   }, [id]);
-  return <>{loading ? <h1>Loading</h1> : <Post post={post} />}</>;
+  return <>{loaded && <Post post={post} />}</>;
 }

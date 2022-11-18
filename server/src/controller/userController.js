@@ -39,12 +39,7 @@ exports.getUser =
         .sort(defaultSort)
         .limit(+req.query.limit || UserLimit)
         .skip(+req.query.skip || 0);
-      // not content
-      if (users.length === 0)
-        throw {
-          message: "No users found!",
-          status: statusCodes.NO_CONTENT,
-        };
+
       // send users
       res.json(users);
     } catch ({ message, status }) {

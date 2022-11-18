@@ -44,12 +44,7 @@ exports.getPost =
         .limit(+req.query.limit || defaultLimit)
         .skip(+req.query.skip || 0)
         .populate(populateOptions);
-      // not users
-      if (posts.length === 0)
-        throw {
-          message: "No posts found!",
-          status: statusCodes.NO_CONTENT,
-        };
+
       // send the posts
       res.json(posts);
     } catch ({ message, status }) {

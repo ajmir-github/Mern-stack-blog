@@ -18,8 +18,7 @@ export default function SingleUser() {
         getPost({ user: id })
           .then((res) => {
             // posts fetched
-            console.log(res);
-            // setPosts(res.data);
+            setPosts(res.data);
             setLoading(false);
           })
           .catch((res) => {
