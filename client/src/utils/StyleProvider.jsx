@@ -8,18 +8,43 @@ import {
   Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { red } from "@mui/material/colors";
 
 function getTheme(themeMode = "light") {
   if (themeMode === "light") {
     return createTheme({
       palette: {
         mode: "light",
+        primary: {
+          main: "#556cd6",
+        },
+        secondary: {
+          main: "#19857b",
+        },
+        error: {
+          main: red.A400,
+        },
+        background: {
+          default: "rgb(215, 215, 215)",
+        },
       },
     });
   } else {
     return createTheme({
       palette: {
         mode: "dark",
+        primary: {
+          main: "#556cd6",
+        },
+        secondary: {
+          main: "#19857b",
+        },
+        error: {
+          main: red.A400,
+        },
+        background: {
+          default: "rgb(40, 40, 40)",
+        },
       },
     });
   }

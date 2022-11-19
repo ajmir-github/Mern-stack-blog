@@ -7,8 +7,9 @@ const post = {
 export const postAction = {
   feed: "POST_FEED",
   append: "POST_APPEND",
-  clear: "POST_CLEAR",
-  update: "POST_UPDATE",
+  clearPosts: "POST_CLEAR_POSTS",
+  clearParams: "POST_CLEAR_PARAMS",
+  setParams: "POST_SET_PARAMS",
 };
 
 export const postReducer = (state = post, { type, payload }) => {
@@ -23,15 +24,20 @@ export const postReducer = (state = post, { type, payload }) => {
         ...state,
         posts: [...state.posts, ...payload],
       };
-    case postAction.clear:
+    case postAction.clearPosts:
       return {
         ...state,
         posts: [],
       };
-    case postAction.update:
+    case postAction.setParams:
       return {
         ...state,
         params: payload,
+      };
+    case postAction.clearParams:
+      return {
+        ...state,
+        params: {},
       };
     default:
       return state;
