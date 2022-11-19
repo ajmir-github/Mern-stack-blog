@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { red } from "@mui/material/colors";
+import { red, purple } from "@mui/material/colors";
 
 function getTheme(themeMode = "light") {
   if (themeMode === "light") {
@@ -25,7 +25,8 @@ function getTheme(themeMode = "light") {
           main: red.A400,
         },
         background: {
-          default: "rgb(215, 215, 215)",
+          default: "rgb(215, 215, 205)",
+          paper: "rgb(235, 235, 225)",
         },
       },
     });
@@ -43,7 +44,8 @@ function getTheme(themeMode = "light") {
           main: red.A400,
         },
         background: {
-          default: "rgb(40, 40, 40)",
+          default: "rgb(40, 40, 50)",
+          paper: "rgb(20, 20, 30)",
         },
       },
     });

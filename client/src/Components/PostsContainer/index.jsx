@@ -22,11 +22,11 @@ function ComponentLink({ href, children }) {
 
 export default function PostsContainer({ posts }) {
   return (
-    <Container sx={{ py: 2 }} maxWidth="xl">
+    <Container sx={{ my: 2 }} maxWidth="xl">
       <Grid container spacing={1}>
         {posts.map((post) => (
           <Grid key={post._id} item xs={12} sm={6} md={4} lg={3}>
-            <Card>
+            <Card elevation={2}>
               <ComponentLink href={"/user/" + post.createdBy._id}>
                 <CardHeader
                   avatar={
@@ -53,14 +53,14 @@ export default function PostsContainer({ posts }) {
                 {typeof post.img !== "undefined" ? (
                   <CardMedia
                     component="img"
-                    sx={{ height: { sm: 194 } }}
+                    sx={{ height: { sm: 240 } }}
                     image={imageURL(post.img, "md")}
                     alt="Paella dish"
                   />
                 ) : (
                   <Grid
                     container
-                    sx={{ height: { sm: 194 } }}
+                    sx={{ height: { sm: 240 } }}
                     justifyContent="center"
                     alignItems="center"
                   >

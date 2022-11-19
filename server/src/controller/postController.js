@@ -38,9 +38,19 @@ exports.getPost =
       query.createdBy = req.query.user;
     }
 
+    // Sort Query
+    let sort = {};
+    if (typeof req.query.sort !== "undefined") {
+      if (req.query.sort === "views") {
+        sort = { views: -1 };
+      } else {
+        sort = { date: -1 };
+      }
+    }
+
     try {
       const posts = await PostModel.find(query, "-body -keywords")
-        .sort({ date: -1 })
+        .sort(sort)
         .limit(+req.query.limit || defaultLimit)
         .skip(+req.query.skip || 0)
         .populate(populateOptions);
