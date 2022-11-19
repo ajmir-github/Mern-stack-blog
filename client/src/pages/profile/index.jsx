@@ -1,18 +1,16 @@
 // imports
 // componenets
-import UserProfile from "./userProfile";
-import Feed from "./feed";
 import ProfilePosts from "./profilePosts";
+import ProfileDetails from "./ProfileDetails";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
+  const user = useSelector((s) => s.auth.user);
+
   return (
     <>
-      {/* user profile */}
-      <UserProfile />
-      {/* feed */}
-      <Feed />
-      {/*  your posts posts */}
-      <ProfilePosts />
+      <ProfileDetails user={user} />
+      <ProfilePosts userId={user._id} />
     </>
   );
 }

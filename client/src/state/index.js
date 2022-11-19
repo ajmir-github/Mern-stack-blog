@@ -5,7 +5,7 @@ import { authReducer, authAction } from "./authReducer";
 import { viewReducer, viewAction } from "./viewReducer";
 import { postReducer, postAction } from "./postReducer";
 import { hasCookie, getCookie, removeCookie } from "../utils/cookie";
-import { authToken } from "../services";
+import { authToken, getUtilKeywords } from "../services";
 
 // Export Actions
 export { authAction, viewAction, postAction };
@@ -23,7 +23,7 @@ const store = configureStore({
 });
 
 // inital state
-function initState() {
+async function initState() {
   const stopLoad = () =>
     store.dispatch({
       type: viewAction.stopLoading,
@@ -32,23 +32,37 @@ function initState() {
   if (!hasCookie()) return stopLoad();
   // auth the cookie
   const token = getCookie();
-  authToken(token)
-    .then((res) => {
-      // sign in user
-      store.dispatch({
-        type: authAction.signIn,
-        payload: {
-          token,
-          user: res.data,
-        },
-      });
-    })
-    .catch(({ response }) => {
-      // delete the cookie if the user does not exists
-      if (response.status === 404) removeCookie();
+  try {
+    const resA = await authToken(token);
+    // sign in user
+    store.dispatch({
+      type: authAction.signIn,
+      payload: {
+        token,
+        user: resA.data,
+      },
     });
-  // stop loading the website
-  stopLoad();
+
+    // Get The KeyWord
+    const resB = await getUtilKeywords();
+    store.dispatch({
+      type: postAction.feedKeywords,
+      payload: resB.data,
+    });
+
+    // stop loading the website
+    stopLoad();
+  } catch (error) {
+    store.dispatch({
+      type: viewAction.openSnackbar,
+      payload: {
+        open: true,
+        message: "Server failed to response!",
+        severity: "error",
+      },
+    });
+    console.warn(error);
+  }
 }
 
 setTimeout(() => {

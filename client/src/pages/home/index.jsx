@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PostsContainer from "../../components/PostsContainer";
 import { getPost } from "../../services";
 import { postAction, viewAction } from "../../state";
-import SearchBar from "./searchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,11 +21,5 @@ export default function Home() {
         dispatch({ type: viewAction.stopLoading });
       });
   }, [post.params]);
-
-  return (
-    <>
-      <SearchBar />
-      <PostsContainer posts={post.posts} />
-    </>
-  );
+  return <PostsContainer posts={post.posts} />;
 }

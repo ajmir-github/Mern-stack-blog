@@ -8,7 +8,7 @@ import SignOutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Avatar, Button, ButtonGroup, Container } from "@mui/material";
+import { Avatar, Button, ButtonGroup, Container, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { authAction, viewAction } from "../../state";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +23,18 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [view, auth] = useSelector((s) => [s.view, s.auth]);
   // funcs must be here no in the elements
+
   const signOut = () => {
     dispatch({ type: authAction.signOut });
     handleClose();
+    dispatch({
+      type: viewAction.openSnackbar,
+      payload: {
+        open: true,
+        message: "You are signed out!",
+        severity: "info",
+      },
+    });
   };
   const turnDarkMode = () => dispatch({ type: viewAction.turnDarkMode });
 
@@ -66,7 +75,6 @@ export default function MenuAppBar() {
             width={64}
           />
         </Typography>
-
         {view.theme === "light" ? (
           <IconButton
             size="large"

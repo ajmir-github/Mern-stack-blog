@@ -13,6 +13,11 @@ function setLocalTheme(themeMode) {
 const view = {
   theme: getLocalTheme(),
   loading: true,
+  snackbar: {
+    open: false,
+    message: "",
+    severity: "info",
+  },
 };
 
 export const viewAction = {
@@ -20,15 +25,32 @@ export const viewAction = {
   turnDarkMode: "DARK_MODE",
   startLoading: "START_LOADING",
   stopLoading: "STOP_LOADING",
+  openSnackbar: "OPEN_SNACKBAR",
+  closeSnackbar: "CLOSE_SNACKBAR",
 };
 
-export function viewReducer(state = view, { type }) {
+export function viewReducer(state = view, { type, payload }) {
   switch (type) {
     case viewAction.startLoading:
       return { ...state, loading: true };
 
     case viewAction.stopLoading:
       return { ...state, loading: false };
+
+    case viewAction.openSnackbar:
+      return {
+        ...state,
+        snackbar: payload,
+      };
+    case viewAction.closeSnackbar:
+      return {
+        ...state,
+        snackbar: {
+          open: false,
+          message: "",
+          severity: "info",
+        },
+      };
 
     case viewAction.turnLightMode:
       setLocalTheme("light");

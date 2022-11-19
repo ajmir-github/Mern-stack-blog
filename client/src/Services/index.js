@@ -107,3 +107,9 @@ export function deletePost(postId) {
 export function updatePost(postId, newProps) {
   return server.patch("/post/" + postId, newProps);
 }
+
+// ----------------- UTIL APIS
+// UPDATE POST
+export function getUtilKeywords() {
+  return server.get("/util/keywords");
+}

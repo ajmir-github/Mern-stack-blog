@@ -1,24 +1,21 @@
 import {
-  Collapse,
   Container,
   FormControl,
   Grid,
-  IconButton,
   InputAdornment,
   Select,
   TextField,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "../../hooks/useDebounce";
 import { postAction } from "../../state";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterIcon from "@mui/icons-material/FilterList";
-import { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
+import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
 export default function SearchBar() {
+  const topicOptions = useSelector((s) => s.post.keywords);
   const [value, onChange] = useDebounce((search) => {
     dispatch({
       type: postAction.setParams,
@@ -30,12 +27,6 @@ export default function SearchBar() {
     { label: "Recently posted", params: { sort: "date" } },
     { label: "Most viewed", params: { sort: "views" } },
   ];
-  const [topicOptions, setTopicOptions] = useState([
-    "Any",
-    "Computer",
-    "Health",
-    "Entertainment",
-  ]);
 
   const [sort, setSort] = useState(0);
   const [topic, setTopic] = useState(0);

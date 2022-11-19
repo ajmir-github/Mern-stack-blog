@@ -39,12 +39,10 @@ exports.getPost =
     }
 
     // Sort Query
-    let sort = {};
+    let sort = { date: -1 };
     if (typeof req.query.sort !== "undefined") {
       if (req.query.sort === "views") {
         sort = { views: -1 };
-      } else {
-        sort = { date: -1 };
       }
     }
 

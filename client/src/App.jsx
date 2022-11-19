@@ -21,6 +21,7 @@ import SignUp from "./pages/signUp";
 import SignIn from "./pages/signIn";
 import Profile from "./pages/profile";
 import NotFound from "./pages/notFound";
+import AppSnackbar from "./components/AppSnackbar";
 
 // Main func
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
     <StyleProvider>
       <BrowserRouter>
         <Navbar />
+        <AppSnackbar />
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route path="/post/:id" element={<SinglePost />} />

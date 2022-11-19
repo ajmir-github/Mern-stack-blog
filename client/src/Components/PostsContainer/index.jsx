@@ -10,6 +10,7 @@ import { Box, Grid } from "@mui/material";
 import { imageURL } from "../../services";
 import formatDate from "../../utils/formatDate";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ComponentLink({ href, children }) {
   const navigate = useNavigate();

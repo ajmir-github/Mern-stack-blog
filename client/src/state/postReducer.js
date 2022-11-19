@@ -2,7 +2,7 @@
 const post = {
   params: {},
   posts: [],
-  keywords: [],
+  keywords: ["Any"],
 };
 
 export const postAction = {
@@ -49,7 +49,7 @@ export const postReducer = (state = post, { type, payload }) => {
     case postAction.feedKeywords:
       return {
         ...state,
-        keywords: payload,
+        keywords: [...state.keywords, ...payload],
       };
     default:
       return state;

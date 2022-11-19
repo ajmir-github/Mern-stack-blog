@@ -14,7 +14,6 @@ export default function UserProfile() {
   return (
     <>
       <img src={imgSrc} />
-      <UpdateProfileImage currentImg={user.img} />
       <div>Full Name: {user.fullName}</div>
       <div>title: {user.title}</div>
       <div>Email: {user.email}</div>
@@ -23,6 +22,7 @@ export default function UserProfile() {
       <hr />
       <h2>Form</h2>
 
+      <UpdateProfileImage currentImg={user.img} />
       <UpdateProfileInfo
         label={"Full Name"}
         currentValue={user.fullName}
