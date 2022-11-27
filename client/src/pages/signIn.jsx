@@ -28,7 +28,17 @@ export default function SignIn() {
           message: data,
         });
       })
-      .finally(() => dispatch({ type: viewAction.stopLoading }));
+      .finally(() => {
+        dispatch({ type: viewAction.stopLoading });
+        dispatch({
+          type: viewAction.openSnackbar,
+          payload: {
+            open: true,
+            message: "You are signed in!",
+            severity: "success",
+          },
+        });
+      });
   };
   return <SignInForm submit={submit} state={state} />;
 }

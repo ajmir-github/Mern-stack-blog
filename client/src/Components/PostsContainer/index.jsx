@@ -6,34 +6,24 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { imageURL } from "../../services";
 import formatDate from "../../utils/formatDate";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-function ComponentLink({ href, children }) {
-  const navigate = useNavigate();
-  return (
-    <Box sx={{ cursor: "pointer" }} onClick={() => navigate(href)}>
-      {children}
-    </Box>
-  );
-}
+import ComponentLink from "../ComponentLink";
 
 export default function PostsContainer({ posts }) {
   return (
     <Container sx={{ my: 2 }} maxWidth="xl">
       <Grid container spacing={1}>
         {posts.map((post) => (
-          <Grid key={post._id} item xs={12} sm={6} md={4} lg={3}>
+          <Grid key={post._id} item xs={12} md={6} lg={4} xl={3}>
             <Card elevation={2}>
               <ComponentLink href={"/user/" + post.createdBy._id}>
                 <CardHeader
                   avatar={
                     typeof post.createdBy.img !== "undefined" ? (
                       <Avatar
-                        src={imageURL(post.createdBy.img, "xxs")}
+                        src={imageURL(post.createdBy.img, "xs")}
                         aria-label="User profile photo"
                       />
                     ) : (
@@ -73,7 +63,15 @@ export default function PostsContainer({ posts }) {
               </ComponentLink>
 
               <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    height: "40px",
+                  }}
+                  variant="body2"
+                  color="text.secondary"
+                >
                   {post.excerpt ||
                     `Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Similique nostrum`}

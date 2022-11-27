@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { authReducer, authAction } from "./authReducer";
 import { viewReducer, viewAction } from "./viewReducer";
 import { postReducer, postAction } from "./postReducer";
-import { hasCookie, getCookie, removeCookie } from "../utils/cookie";
+import { hasCookie, getCookie } from "../utils/cookie";
 import { authToken, getUtilKeywords } from "../services";
 
 // Export Actions

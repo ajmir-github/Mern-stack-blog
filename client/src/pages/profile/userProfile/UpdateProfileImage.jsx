@@ -15,13 +15,16 @@ export default function UpdateProfileImage({ currentImg }) {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
-  const upload = async (formData) => {
+  const submit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(inputRef.current);
     try {
       // upload the image
       setUploading(true);
-      const resA = await uploadImage(formData, setUploadingProgress);
+      const resA = await uploadImage(form, setUploadingProgress);
       setUploading(false);
 
+      console.log(resA);
       // save the image url in user.img
       dispatch({ type: viewAction.startLoading });
       await updateUser({ img: resA.data });
@@ -37,16 +40,9 @@ export default function UpdateProfileImage({ currentImg }) {
       console.warn(error);
     }
   };
-
-  const submit = (e) => {
-    e.preventDefault();
-    const files = inputRef.current.files;
-    if (files.length === 0) return setMessage("Please select an image!");
-    upload(e.target);
-  };
   return (
     <form onSubmit={submit} encType="multipart/form-data">
-      <input type="file" name="file" accept="image/*" ref={inputRef} />
+      <input required type="file" name="file" accept="image/*" />
       <input type="submit" value="Upload"></input>
       <div style={{ color: "red" }}>
         <i>{message}</i>

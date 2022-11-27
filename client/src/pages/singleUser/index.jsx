@@ -5,11 +5,13 @@ import { getSingleUser, imageURL, getPost } from "../../services";
 // components
 import PostsContainer from "../../components/PostsContainer";
 import GoBack from "../../components/GoBack";
+import { Avatar, Container, Grid, Typography } from "@mui/material";
+import UserProfile from "./UserProfile";
 
 export default function SingleUser() {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const { id } = useParams();
   useEffect(() => {
     setLoading(true);
@@ -35,26 +37,9 @@ export default function SingleUser() {
 
   return (
     <>
-      {loading ? (
-        <h1>Loading</h1>
-      ) : (
-        <>
-          <img
-            src={
-              typeof user.img === "undefined"
-                ? "/assets/unknown_user.jpg"
-                : imageURL(user.img, "xs")
-            }
-          />
-          <div>Full Name: {user.fullName}</div>
-          <div>title: {user.title}</div>
-          <div>Email: {user.email}</div>
-          <hr />
-
-          <PostsContainer posts={posts} />
-          <GoBack />
-        </>
-      )}
+      <UserProfile user={user} />
+      <PostsContainer posts={posts} />
+      <GoBack />
     </>
   );
 }

@@ -2,7 +2,8 @@ import { setCookie, removeCookie } from "../utils/cookie";
 
 const auth = {
   signed: false,
-  //   token: "", user: {},
+  token: "",
+  user: {},
 };
 
 export const authAction = {

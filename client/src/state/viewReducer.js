@@ -40,7 +40,12 @@ export function viewReducer(state = view, { type, payload }) {
     case viewAction.openSnackbar:
       return {
         ...state,
-        snackbar: payload,
+        snackbar: {
+          open: false,
+          message: "",
+          severity: "info",
+          ...payload,
+        },
       };
     case viewAction.closeSnackbar:
       return {

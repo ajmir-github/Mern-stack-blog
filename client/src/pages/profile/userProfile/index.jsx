@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { imageURL } from "../../../services";
 
-import UpdateProfileInfo from "./UpdateProfileInfo";
+import UpdateProfileInfo from "../../../components/UpdateProfileInfo";
 import UpdateProfileImage from "./UpdateProfileImage";
 
 export default function UserProfile() {

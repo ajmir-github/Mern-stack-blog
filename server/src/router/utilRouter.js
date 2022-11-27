@@ -33,7 +33,6 @@ router.get(
         .map((obj) => obj.word);
       res.send(words);
     } catch ({ status, message }) {
-      console.log(message);
       res.status(status || 500).send(message || "+++ Server error!");
     }
   }

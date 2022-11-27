@@ -1,25 +1,33 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import PostsContainer from "../../components/PostsContainer";
 import { getPost } from "../../services";
-import { postAction, viewAction } from "../../state";
+import { viewAction } from "../../state";
+import SearchBar from "../../components/SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const post = useSelector((s) => s.post);
-
+  const [params, setParams] = useState({});
+  const [posts, setPosts] = useState([]);
+  const loading = {
+    start:()=> dispatch({ type: viewAction.startLoading }),
+    stop:()=>dispatch({ type: viewAction.stopLoading })
+  }
   useEffect(() => {
-    dispatch({ type: viewAction.startLoading });
-    getPost(post.params)
+    loading.start()
+    getPost(params)
       .then((res) => {
-        dispatch({ type: postAction.feed, payload: res.data });
+        setPosts(res.data)
       })
       .catch((res) => {
         console.warn(res);
       })
-      .finally(() => {
-        dispatch({ type: viewAction.stopLoading });
-      });
-  }, [post.params]);
-  return <PostsContainer posts={post.posts} />;
+      .finally(loading.stop);
+  }, [params]);
+  return (
+    <>
+    <SearchBar params={params} setParams={setParams}/>
+    <PostsContainer posts={posts} />
+    </>
+  )
 }
