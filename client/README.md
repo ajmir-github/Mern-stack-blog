@@ -12,9 +12,12 @@
 
 - Uploading and editing profile was restructured and make simple for users
 
+## Nov 27, 2022
+
+- Feed component was imprved and put in a stepper modal
+
 ## Remain Tasks
 
-- Feed component
 - Single post
 - Search and filter component for users page
 - post edit and delete options
