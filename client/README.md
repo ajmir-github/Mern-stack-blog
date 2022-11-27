@@ -15,6 +15,7 @@
 ## Remain Tasks
 
 - Feed component
+- Single post
 - Search and filter component for users page
 - post edit and delete options
 - Re-structure the service funcs by making them easy to use and handle the errors

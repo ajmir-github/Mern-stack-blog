@@ -10,14 +10,14 @@ export default function Home() {
   const [params, setParams] = useState({});
   const [posts, setPosts] = useState([]);
   const loading = {
-    start:()=> dispatch({ type: viewAction.startLoading }),
-    stop:()=>dispatch({ type: viewAction.stopLoading })
-  }
+    start: () => dispatch({ type: viewAction.startLoading }),
+    stop: () => dispatch({ type: viewAction.stopLoading }),
+  };
   useEffect(() => {
-    loading.start()
+    loading.start();
     getPost(params)
       .then((res) => {
-        setPosts(res.data)
+        setPosts(res.data);
       })
       .catch((res) => {
         console.warn(res);
@@ -26,8 +26,8 @@ export default function Home() {
   }, [params]);
   return (
     <>
-    <SearchBar params={params} setParams={setParams}/>
-    <PostsContainer posts={posts} />
+      <SearchBar params={params} setParams={setParams} />
+      <PostsContainer posts={posts} />
     </>
-  )
+  );
 }

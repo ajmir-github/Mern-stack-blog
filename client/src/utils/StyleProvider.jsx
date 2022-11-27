@@ -6,9 +6,10 @@ import {
   CircularProgress,
   Grid,
   Typography,
+  Box,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { red, purple } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 
 function getTheme(themeMode = "light") {
   if (themeMode === "light") {
