@@ -20,18 +20,13 @@ export default function UserProfile({ user, signed }) {
   return (
     <Container>
       <Grid container flexDirection="column" alignItems="center" sx={{ my: 2 }}>
-        {signed && (
-          <Grid item container justifyContent="flex-end">
-            <UserFunc />
-          </Grid>
-        )}
         <Grid item>
           <Avatar
-            sx={{ width: 220, height: 220 }}
+            sx={{ width: 160, height: 160 }}
             src={
               typeof user.img === "undefined"
                 ? "/assets/unknown_user.jpg"
-                : imageURL(user.img, "md")
+                : imageURL(user.img, "sm")
             }
           />
         </Grid>
@@ -45,7 +40,7 @@ export default function UserProfile({ user, signed }) {
             {user.email}
           </Typography>
         </Grid>
-        <Feed />
+        {signed && <UserFunc />}
       </Grid>
     </Container>
   );

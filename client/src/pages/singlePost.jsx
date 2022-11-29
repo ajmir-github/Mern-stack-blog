@@ -5,45 +5,79 @@ import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
 // components
 import GoBack from "../components/GoBack";
+import ComponentLink from "../components/ComponentLink";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Chip,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { red } from "@mui/material/colors";
 
 function Post({ post }) {
   return (
-    <div style={{ padding: 10, margin: 10 }}>
-      <div>
-        <div>{post.createdBy?.fullName}</div>
-        <Link to={"/user/" + post.createdBy?._id}>
-          <img
-            src={
-              typeof post.img !== "undefined"
-                ? imageURL(post.createdBy?.img, "xs")
-                : "/assets/unknown_user.jpg"
-            }
-            width={64}
+    <Card variant="outlined" sx={{ background: "none", mb: 2 }}>
+      <ComponentLink href={"/user/" + post.createdBy._id}>
+        <CardHeader
+          avatar={
+            typeof post.createdBy.img !== "undefined" ? (
+              <Avatar
+                src={imageURL(post.createdBy.img, "xs")}
+                aria-label="User profile photo"
+              />
+            ) : (
+              <Avatar
+                sx={{ bgcolor: red[500] }}
+                aria-label="User profile avatar"
+              >
+                {post.createdBy.fullName.slice(0, 2)}
+              </Avatar>
+            )
+          }
+          title={post.createdBy.fullName}
+          subheader={formatDate(post.date)}
+        />
+      </ComponentLink>
+
+      <ComponentLink href={"/post/" + post._id}>
+        {typeof post.img !== "undefined" && (
+          <CardMedia
+            component="img"
+            image={imageURL(post.img, "xl")}
+            alt="Paella dish"
           />
-        </Link>
-      </div>
-      <div>{formatDate(post.date)}</div>
+        )}
+      </ComponentLink>
 
-      {typeof post.img !== "undefined" ? (
-        <>
-          <img src={imageURL(post.img, "md")} width={400} />
-          <h4>{post.title}</h4>
-        </>
-      ) : (
-        <h1>{post.title}</h1>
-      )}
+      <CardContent>
+        <Typography variant="h4">{post.title}</Typography>
 
-      {typeof post.keywords !== "undefined" && (
-        <ul>
-          {post.keywords.split(",").map((keyword) => (
-            <li>{keyword.trim()}</li>
-          ))}
-        </ul>
-      )}
-      <p>{post.keywords}</p>
-      <p>{post.excerpt}</p>
-      <p>{post.body}</p>
-    </div>
+        {typeof post.keywords !== "undefined" && (
+          <Stack direction="row" spacing={1} sx={{ my: 2 }}>
+            {post.keywords.split(",").map((keyword, index) => (
+              <ComponentLink key={index} href={"/?keyword=" + keyword.trim()}>
+                <Chip
+                  clickable
+                  label={keyword.trim()}
+                  color="info"
+                  variant="outlined"
+                />
+              </ComponentLink>
+            ))}
+          </Stack>
+        )}
+        <Typography variant="subtitle1" sx={{ my: 2 }}>
+          {post.excerpt}
+        </Typography>
+        <Typography variant="body1">{post.body}</Typography>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -63,10 +97,10 @@ export default function SinglePost() {
   }, [id]);
   return (
     loaded && (
-      <>
+      <Container>
         <Post post={post} />
         <GoBack />
-      </>
+      </Container>
     )
   );
 }

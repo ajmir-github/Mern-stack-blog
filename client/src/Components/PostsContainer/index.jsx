@@ -14,10 +14,10 @@ import ComponentLink from "../ComponentLink";
 export default function PostsContainer({ posts }) {
   return (
     <Container sx={{ my: 2 }} maxWidth="xl">
-      <Grid container spacing={1}>
+      <Grid container rowSpacing={2} columnSpacing={1}>
         {posts.map((post) => (
-          <Grid key={post._id} item xs={12} md={6} lg={4} xl={3}>
-            <Card elevation={2}>
+          <Grid key={post._id} item xs={12} sm={6} md={4} lg={3}>
+            <Card variant="outlined" sx={{ background: "none" }}>
               <ComponentLink href={"/user/" + post.createdBy._id}>
                 <CardHeader
                   avatar={

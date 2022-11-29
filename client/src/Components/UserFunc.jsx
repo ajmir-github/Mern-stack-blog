@@ -13,10 +13,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { useState } from "react";
 import UploadProfile from "./uploadProfile";
 import EditProfile from "./EditProfile";
+import { Button, Grid } from "@mui/material";
+import Feed from "./Feed";
+import PostIcon from "@mui/icons-material/PostAdd";
 
 export default function UserFunc() {
   const [openUploadProfile, setOpenUploadProfile] = useState(false);
   const [openEditProfile, setOpenEditProfile] = useState(false);
+  const [openPostModal, setPostModal] = useState(false);
+
   const closeMenu = () => setAnchorEl(null);
   const user = useSelector((s) => s.auth.user);
   const dispatch = useDispatch();
@@ -47,45 +52,51 @@ export default function UserFunc() {
   };
   return (
     <>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenu}
-        color="inherit"
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorEl}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        open={Boolean(anchorEl)}
-        onClose={closeMenu}
-      >
-        <MenuItem onClick={setOpenUploadProfileFunc}>
-          <ListItemIcon>
-            <UploadIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Upload Profile</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={setOpenEditProfileFunc}>
-          <ListItemIcon>
-            <ProfileIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Edit Profile</ListItemText>
-        </MenuItem>
+      <Grid container flexDirection={"column"} spacing={1}>
+        <Grid item>
+          <Button
+            startIcon={<PostIcon />}
+            onClick={() => setPostModal(true)}
+            fullWidth
+            variant="outlined"
+          >
+            Make a post
+          </Button>
+          <Feed open={openPostModal} setOpen={setPostModal} />
+        </Grid>
+        <Grid item>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<UploadIcon />}
+            onClick={setOpenUploadProfileFunc}
+          >
+            Upload Profile
+          </Button>
+        </Grid>
 
-        <MenuItem onClick={signOut}>
-          <ListItemIcon>
-            <SignOutIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Sign out</ListItemText>
-        </MenuItem>
-      </Menu>
+        <Grid item>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<ProfileIcon />}
+            onClick={setOpenEditProfileFunc}
+          >
+            Edit Profile
+          </Button>
+        </Grid>
+
+        <Grid item>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<SignOutIcon />}
+            onClick={signOut}
+          >
+            Sign out
+          </Button>
+        </Grid>
+      </Grid>
 
       <UploadProfile
         open={openUploadProfile}

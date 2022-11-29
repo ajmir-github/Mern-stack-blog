@@ -51,6 +51,7 @@ export default function SearchBar({ params, setParams }) {
       <Grid container alignItems="center" spacing={2}>
         <Grid item xs={12} md={8}>
           <TextField
+            size="small"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -69,6 +70,7 @@ export default function SearchBar({ params, setParams }) {
           <FormControl fullWidth>
             <InputLabel id="input-label-sort">Sort</InputLabel>
             <Select
+              size="small"
               labelId="input-label-sort"
               id="input-label-sort"
               value={sort}
@@ -87,6 +89,7 @@ export default function SearchBar({ params, setParams }) {
           <FormControl fullWidth>
             <InputLabel id="input-label-Topic">Topic</InputLabel>
             <Select
+              size="small"
               labelId="input-label-Topic"
               id="input-label-Topic"
               value={topic}

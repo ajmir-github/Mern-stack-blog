@@ -55,6 +55,7 @@ export default function SearchBar() {
       <Grid container alignItems="center" spacing={2}>
         <Grid item xs={12} md={8}>
           <TextField
+            size="large"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

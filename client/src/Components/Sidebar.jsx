@@ -23,31 +23,27 @@ export default function Sidebar() {
   const [currentTab, setCurrentTab] = useState("1");
   const changeTab = (event, newValue) => setCurrentTab(newValue);
 
-  return (
-    <Box sx={{ position: "sticky", top: 0 }}>
-      {auth.signed ? (
-        <UserProfile user={auth.user} signed={auth.signed} />
-      ) : (
-        <TabContext value={currentTab}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList
-              centered
-              variant="fullWidth"
-              onChange={changeTab}
-              aria-label="lab API tabs example"
-            >
-              <Tab label="Sign In" value="1" />
-              <Tab label="Sign Up" value="2" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">
-            <SignIn />
-          </TabPanel>
-          <TabPanel value="2">
-            <SignUp />
-          </TabPanel>
-        </TabContext>
-      )}
-    </Box>
+  return auth.signed ? (
+    <UserProfile user={auth.user} signed={auth.signed} />
+  ) : (
+    <TabContext value={currentTab}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <TabList
+          centered
+          variant="fullWidth"
+          onChange={changeTab}
+          aria-label="lab API tabs example"
+        >
+          <Tab label="Sign In" value="1" />
+          <Tab label="Sign Up" value="2" />
+        </TabList>
+      </Box>
+      <TabPanel value="1">
+        <SignIn />
+      </TabPanel>
+      <TabPanel value="2">
+        <SignUp />
+      </TabPanel>
+    </TabContext>
   );
 }

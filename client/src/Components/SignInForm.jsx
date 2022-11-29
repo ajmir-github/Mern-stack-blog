@@ -26,6 +26,7 @@ export default function SignIn({ submit, state }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        maxWidth: "320px",
       }}
     >
       <Avatar sx={{ m: 1 }}>

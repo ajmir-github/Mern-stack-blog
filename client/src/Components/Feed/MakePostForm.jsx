@@ -69,12 +69,9 @@ export default function MakePostForm({ postIdRef, setActiveStep, closeModal }) {
         maxRows={4}
       />
 
-      <ButtonGroup>
-        <Button type="submit" fullWidth variant="outlined">
-          Post
-        </Button>
-        <Button onClick={closeModal}>Cancel</Button>
-      </ButtonGroup>
+      <Button type="submit" fullWidth variant="outlined">
+        Post
+      </Button>
     </Grid>
   );
 }

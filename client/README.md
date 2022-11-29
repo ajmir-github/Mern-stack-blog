@@ -16,9 +16,12 @@
 
 - Feed component was imprved and put in a stepper modal
 
-## Remain Tasks
+## Nov 28, 2022
 
 - Single post
+
+## Remain Tasks
+
 - Search and filter component for users page
 - post edit and delete options
 - Re-structure the service funcs by making them easy to use and handle the errors
