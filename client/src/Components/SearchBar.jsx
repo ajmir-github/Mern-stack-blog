@@ -17,14 +17,19 @@ export default function SearchBar({ params, setParams }) {
   const [sort, setSort] = useState(0);
   const [topic, setTopic] = useState(0);
   const topicOptions = useSelector((s) => s.post.keywords);
+  // remove the empty properties
+  const setProperParams = (obj) =>
+    setParams(
+      Object.fromEntries(Object.entries(obj).filter(([key, value]) => value))
+    );
   const [value, onChange] = useDebounce((search) => {
-    setParams({
+    setProperParams({
       ...params,
-      search: search !== "" ? search : undefined,
+      search,
     });
   });
   const sortOptions = [
-    { label: "Unset", params: { sort: undefined } },
+    { label: "Unset", params: { sort: null } },
     { label: "Recently posted", params: { sort: "date" } },
     { label: "Most viewed", params: { sort: "views" } },
   ];
@@ -32,7 +37,7 @@ export default function SearchBar({ params, setParams }) {
   const handleSortChange = (e) => {
     const value = e.target.value;
     setSort(value);
-    setParams({
+    setProperParams({
       ...params,
       ...sortOptions[value].params,
     });
@@ -40,15 +45,15 @@ export default function SearchBar({ params, setParams }) {
   const handleTopicChange = (e) => {
     const value = e.target.value;
     setTopic(value);
-    setParams({
+    setProperParams({
       ...params,
-      keyword: value === 0 ? undefined : topicOptions[value],
+      keyword: value === 0 ? null : topicOptions[value],
     });
   };
 
   return (
     <Container maxWidth="xl" sx={{ mt: 1 }}>
-      <Grid container alignItems="center" spacing={2}>
+      <Grid container alignItems="center" rowSpacing={2} columnSpacing={1}>
         <Grid item xs={12} md={8}>
           <TextField
             size="small"

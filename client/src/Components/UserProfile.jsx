@@ -22,7 +22,8 @@ export default function UserProfile({ user, signed }) {
       <Grid container flexDirection="column" alignItems="center" sx={{ my: 2 }}>
         <Grid item>
           <Avatar
-            sx={{ width: 160, height: 160 }}
+            variant="rounded"
+            sx={{ width: 220, height: 220 }}
             src={
               typeof user.img === "undefined"
                 ? "/assets/unknown_user.jpg"

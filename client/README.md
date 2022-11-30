@@ -20,8 +20,11 @@
 
 - Single post
 
-## Remain Tasks
+## Nov 29, 2022
 
 - Search and filter component for users page
+
+## Remain Tasks
+
 - post edit and delete options
 - Re-structure the service funcs by making them easy to use and handle the errors

@@ -14,16 +14,11 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 export default function UserProfile({ user }) {
   return (
-    <Grid
-      container
-      flexDirection="row"
-      alignItems="center"
-      sx={{ p: 2 }}
-      spacing={3}
-    >
-      <Grid item>
+    <Grid container alignItems="center" sx={{ p: 2 }} spacing={2}>
+      <Grid item xs={12} container justifyContent="center">
         <Avatar
-          sx={{ width: 220, height: 220 }}
+          variant="rounded"
+          sx={{ width: 320, height: 320 }}
           src={
             typeof user.img === "undefined"
               ? "/assets/unknown_user.jpg"
@@ -32,7 +27,7 @@ export default function UserProfile({ user }) {
         />
       </Grid>
 
-      <Grid item>
+      <Grid item xs={12} container flexDirection="column" alignItems="center">
         <Typography variant="h6">{user.fullName}</Typography>
         <Typography color="primary.dark" variant="subtitle1">
           {user.title}

@@ -125,7 +125,7 @@ exports.deletePost =
       const user = req.payload.get(userKey);
       const post = await PostModel.findById(req.params.id);
       // Is this user allowed
-      if (user.toString() !== post[refKey].toString())
+      if (user._id.toString() !== post[refKey].toString())
         throw {
           message: "You are not allowed!",
           status: statusCodes.FORBIDDEN,

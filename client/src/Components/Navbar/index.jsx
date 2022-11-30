@@ -42,29 +42,7 @@ export default function MenuAppBar() {
         >
           <MoreVertIcon />
         </IconButton>
-        {view.theme === "light" ? (
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={turnDarkMode}
-          >
-            <DarkModeIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={turnLightMode}
-          >
-            <LightModeIcon />
-          </IconButton>
-        )}
+
         <Typography
           variant="h4"
           component="h1"
@@ -84,13 +62,38 @@ export default function MenuAppBar() {
       </Toolbar>
 
       <Drawer anchor="left" open={openDrawer} onClose={() => setDrawer(false)}>
-        <Button
-          startIcon={<CloseIcon />}
-          onClick={() => setDrawer(false)}
-          color="error"
-        >
-          Close
-        </Button>
+        <Grid container flexDirection={"column"} spacing={1}>
+          <Grid item>
+            <Button
+              fullWidth
+              startIcon={<CloseIcon />}
+              onClick={() => setDrawer(false)}
+              color="error"
+            >
+              Close
+            </Button>
+          </Grid>
+          <Grid item>
+            {view.theme === "light" ? (
+              <Button
+                fullWidth
+                onClick={turnDarkMode}
+                startIcon={<DarkModeIcon />}
+              >
+                Dark
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                onClick={turnLightMode}
+                startIcon={<LightModeIcon />}
+              >
+                Light
+              </Button>
+            )}
+          </Grid>
+        </Grid>
+
         <Sidebar />
       </Drawer>
     </Container>

@@ -17,6 +17,7 @@ function useURLQuery() {
 }
 
 export default function Home() {
+  const [refetch, setRefetch] = useState(false);
   const [searchParams, setSearchParams] = useURLQuery();
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
@@ -24,6 +25,8 @@ export default function Home() {
     start: () => dispatch({ type: viewAction.startLoading }),
     stop: () => dispatch({ type: viewAction.stopLoading }),
   };
+
+  const reFetchPosts = () => setRefetch(!refetch);
 
   const loadMorePosts = () => {
     alert("loadMorePosts");
@@ -38,11 +41,11 @@ export default function Home() {
         console.warn(res);
       })
       .finally(loading.stop);
-  }, [searchParams]);
+  }, [searchParams, refetch]);
   return (
     <>
       <SearchBar params={searchParams} setParams={setSearchParams} />
-      <PostsContainer posts={posts} />
+      <PostsContainer posts={posts} reFetchPosts={reFetchPosts} />
     </>
   );
 }

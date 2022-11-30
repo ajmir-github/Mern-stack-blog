@@ -13,46 +13,17 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ComponentLink from "../../components/ComponentLink";
 import GoBack from "../../components/GoBack";
+import UserSearchBar from "../../components/UserSearchBar";
 import { getUser, imageURL } from "../../services";
 import { viewAction } from "../../state";
 
-function UserCard({ user }) {
-  return (
-    <>
-      <img
-        src={
-          typeof user.img !== "undefined"
-            ? imageURL(user.img, "md")
-            : "/assets/unknown_user.jpg"
-        }
-        width={320}
-      />
-      <h4>{user.fullName}</h4>
-      <h5>{user.title}</h5>
-      <div>
-        <Link to={"/user/" + user._id}>View</Link>
-      </div>
-    </>
-  );
-}
-
-function UserContainer({ users }) {
-  return (
-    <div>
-      <h1>Users</h1>
-      {users.map((user) => (
-        <UserCard key={user._id} user={user} />
-      ))}
-    </div>
-  );
-}
-
 export default function Users() {
+  const [params, setParams] = useState({});
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   useEffect(() => {
     dispatch({ type: viewAction.startLoading });
-    getUser()
+    getUser(params)
       .then((res) => {
         setUsers(res.data);
       })
@@ -62,14 +33,15 @@ export default function Users() {
       .finally(() => {
         dispatch({ type: viewAction.stopLoading });
       });
-  }, []);
+  }, [params]);
   return (
     <>
+      <UserSearchBar params={params} setParams={setParams} />
       <Container sx={{ py: 2 }} maxWidth="xl">
         {/* End hero unit */}
-        <Grid container spacing={4}>
+        <Grid container rowSpacing={2} columnSpacing={1}>
           {users.map((user) => (
-            <Grid item key={user._id} xs={12} md={6} lg={4} xl={3}>
+            <Grid item key={user._id} xs={12} sm={6} md={4} lg={3} xl={2}>
               <Card
                 sx={{
                   height: "100%",
@@ -81,7 +53,7 @@ export default function Users() {
                   <CardMedia
                     component="img"
                     sx={{
-                      height: "320px",
+                      height: "240px",
                     }}
                     image={
                       typeof user.img === "undefined"
