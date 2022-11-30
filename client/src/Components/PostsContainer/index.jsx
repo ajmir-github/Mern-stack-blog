@@ -44,17 +44,7 @@ function Post({ post, reFetchPosts }) {
     }
   }, [auth.signed]);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const openDeleteDialog = () => {
-    setAnchorEl(null);
     setDeleteDialog(true);
   };
   const handleDeletePost = () => {
@@ -98,36 +88,12 @@ function Post({ post, reFetchPosts }) {
             <IconButton
               aria-label="settings"
               sx={{ display: editable ? "inline-flex" : "none" }}
-              onClick={handleClick}
+              onClick={openDeleteDialog}
             >
-              <MoreVertIcon />
+              <DeleteIcon />
             </IconButton>
           }
         />
-
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <EditIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Edit</ListItemText>
-          </MenuItem>
-
-          <MenuItem onClick={openDeleteDialog}>
-            <ListItemIcon>
-              <DeleteIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
-          </MenuItem>
-        </Menu>
 
         <Dialog
           open={deleteDialog}
@@ -135,13 +101,9 @@ function Post({ post, reFetchPosts }) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            {"Use Google's location service?"}
-          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
+              Are you to delete this post?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
